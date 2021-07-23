@@ -1,5 +1,6 @@
 import '../styles/globals.css';
-import Home from './Home';
+import About from './about';
+import Home from './home';
 
 function MyApp() {
   return (

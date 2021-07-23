@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "commit": "cz"
   },
   "dependencies": {
     "next": "11.0.1",
@@ -15,9 +16,15 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "7.31.0",
     "eslint-config-next": "11.0.1",
     "postcss": "^8.3.6",
     "tailwindcss": "^2.2.6"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

@@ -1,9 +1,20 @@
 import React from 'react';
+import Link from 'next/link';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
-export default function about() {
+export default function About() {
   return (
     <div>
-      <p>About page</p>
+      <Header />
+      <Link href="/home">
+        <a>Home</a>
+      </Link>
+      <Link href="/about">
+        <a>About</a>
+      </Link>
+      <p>This is fucked about</p>
+      <Footer />
     </div>
   );
 }
