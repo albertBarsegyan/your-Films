@@ -10,9 +10,13 @@
     "commit": "cz"
   },
   "dependencies": {
+    "@material-ui/core": "^4.12.2",
+    "@material-ui/icons": "^4.11.2",
+    "formik": "^2.2.9",
     "next": "11.0.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "autoprefixer": "^10.3.1",

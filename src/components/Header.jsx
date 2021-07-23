@@ -1,9 +1,11 @@
 import React from 'react';
-
+import AllInclusiveIcon from '@material-ui/icons/AllInclusive';
 export default function Header() {
   return (
     <div>
-      <p>This is header</p>
+      <p>
+        <AllInclusiveIcon />
+      </p>
     </div>
   );
 }
