@@ -1,21 +1,27 @@
 import { Formik, Form } from 'formik';
-import React, { Component, useState, useEffect } from 'react';
-import checkPasswordAndEmail from '../helpers/checkPasswordAndEmail';
+import React, { useState, useEffect } from 'react';
 import handleLogin from '../helpers/handleLogin';
 import { loginScheme } from '../helpers/loginCheme';
 import PopUp from '../components/PopUp';
 import CommonButton from './CommonButton';
 import TextField from './TextField';
+import { useRouter } from 'next/router';
 
 export default function CommonLogin() {
   const [showPopup, setShowPopup] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
+  const router = useRouter();
   useEffect(() => {
     if (showPopup) {
       setTimeout(() => {
         setShowPopup(false);
       }, 4000);
     }
-  }, [showPopup]);
+    if (isLogged) {
+      router.push('/user');
+    }
+  }, [showPopup, isLogged, router]);
+
   return (
     <div>
       {showPopup ? (
@@ -28,7 +34,7 @@ export default function CommonLogin() {
         }}
         validationSchema={loginScheme}
         onSubmit={(values) => {
-          handleLogin(values, setShowPopup);
+          handleLogin(values, setShowPopup, setIsLogged);
         }}
       >
         {() => {
