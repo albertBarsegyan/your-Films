@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Button } from '@material-ui/core';
+
 import { Formik, Form } from 'formik';
 import TextField from './TextField';
 import { registerScheme } from '../helpers/registerScheme';
 import GenderCheckGroup from './GenderCheckGroup';
+import CommonButton from './CommonButton';
+import { handleRegistrationSubmit } from '../helpers/handleRegistraionSubmit';
 
 export default function CommonForm() {
   const [users, setUsers] = useState([]);
   useEffect(() => {
     if (localStorage.getItem('localUsers')) {
-      setUsers((prevState) => [
-        ...prevState,
-        ...JSON.parse(localStorage.getItem('localUsers')),
-      ]);
-      console.log('did mount state list', users);
+      setUsers(() => [...JSON.parse(localStorage.getItem('localUsers'))]);
+      // console.log('did mount state list [common form]', users);
     }
   }, []);
+
+  useEffect(() => {
+    console.log(users);
+  }, [users]);
+
   return (
     <Formik
       initialValues={{
@@ -27,27 +31,16 @@ export default function CommonForm() {
         gender: '',
       }}
       validationSchema={registerScheme}
-      onSubmit={(values) => {
-        if (!localStorage.getItem('localUsers')) {
-          Promise.resolve('success')
-            .then(() => {
-              localStorage.setItem('localUsers', JSON.stringify(usersList));
-              return JSON.parse(localStorage.getItem('localUser'));
-            })
-            .then((data) => {
-              setUsers((prevState) => [...prevState, ...data]);
-              console.log(users);
-            });
-
-          return;
-        }
-
-        console.log(values);
+      onSubmit={(formData) => {
+        handleRegistrationSubmit(formData, setUsers);
       }}
     >
       {() => {
         return (
           <div className="ml-10 w-3/12">
+            <div className="text-center py-3 border-b border-gray-800 my-5">
+              <span className="text-xl text-gray-800 ">Register now.</span>
+            </div>
             <Form>
               <div className="flex flex-col items-center justify-center">
                 <TextField
@@ -73,9 +66,7 @@ export default function CommonForm() {
                 />
                 <GenderCheckGroup />
                 <div>
-                  <Button type="submit" variant="contained" color="primary">
-                    Register
-                  </Button>
+                  <CommonButton type="submit" buttonInnerText="Register" />
                 </div>
               </div>
             </Form>

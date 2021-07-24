@@ -1,5 +1,8 @@
 import * as Yup from 'yup';
 
+
+
+// Using built-in methods
 export const registerScheme = Yup.object({
   firstName: Yup.string()
     .min(2, 'Too Short!')
@@ -11,7 +14,9 @@ export const registerScheme = Yup.object({
     .max(50, 'Too Long!')
     .required('Lastname is required'),
 
-  email: Yup.string().email('Email is invalid.').required('Email is required'),
+  email: Yup.string()
+    .email('Email is invalid.')
+    .required('Email is required'),
 
   password: Yup.string()
     .required('Password is required')

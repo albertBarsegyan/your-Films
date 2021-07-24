@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
-import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import { Field } from 'formik';
-import CheckIcon from '@material-ui/icons/Check';
+
 export default class GenderCheckGroup extends Component {
   render() {
     return (
