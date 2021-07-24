@@ -1,20 +1,34 @@
-import { Formik } from 'formik';
-import React, { Component } from 'react';
-import { registerScheme } from '../helpers/registerScheme';
+import { Formik, Form } from 'formik';
+import React, { Component, useState, useEffect } from 'react';
+import checkPasswordAndEmail from '../helpers/checkPasswordAndEmail';
+import handleLogin from '../helpers/handleLogin';
+import { loginScheme } from '../helpers/loginCheme';
+import PopUp from '../components/PopUp';
 import CommonButton from './CommonButton';
 import TextField from './TextField';
 
 export default function CommonLogin() {
+  const [showPopup, setShowPopup] = useState(false);
+  useEffect(() => {
+    if (showPopup) {
+      setTimeout(() => {
+        setShowPopup(false);
+      }, 4000);
+    }
+  }, [showPopup]);
   return (
     <div>
+      {showPopup ? (
+        <PopUp popUpMessage="Email or password is incorrect." isError={true} />
+      ) : null}
       <Formik
         initialValues={{
           email: '',
           password: '',
         }}
-        validationSchema={registerScheme}
+        validationSchema={loginScheme}
         onSubmit={(values) => {
-          // console.log(values);
+          handleLogin(values, setShowPopup);
         }}
       >
         {() => {
@@ -25,7 +39,7 @@ export default function CommonLogin() {
                   <h1 className="text-gray-900 text-4xl text-center">Login</h1>
                 </div>
                 <div className="mt-10">
-                  <form>
+                  <Form>
                     <div>
                       <TextField
                         type="email"
@@ -41,7 +55,7 @@ export default function CommonLogin() {
                         <CommonButton type="submit" buttonInnerText="Login" />
                       </div>
                     </div>
-                  </form>
+                  </Form>
                 </div>
               </div>
             </div>

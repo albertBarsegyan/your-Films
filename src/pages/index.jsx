@@ -13,7 +13,7 @@ export default class Home extends Component {
         <Header>
           <div className="absolute right-10">
             <Link href="/login" passHref>
-              <CommonButton buttonInnerText="Login" />
+              <CommonButton buttonInnerText="Sign in" />
             </Link>
           </div>
         </Header>

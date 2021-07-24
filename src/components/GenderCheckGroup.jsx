@@ -10,13 +10,25 @@ export default class GenderCheckGroup extends Component {
         </div>
         <div className="mx-2 inline-block">
           <label>
-            <Field className="mx-2" type="radio" name="gender" value="male" />
+            <Field
+              className="mx-2"
+              type="radio"
+              name="gender"
+              value="male"
+              required
+            />
             Male
           </label>
         </div>
         <div className="mx-2 inline-block">
           <label>
-            <Field className="mx-2" type="radio" name="gender" value="female" />
+            <Field
+              className="mx-2"
+              type="radio"
+              name="gender"
+              value="female"
+              required
+            />
             Female
           </label>
         </div>

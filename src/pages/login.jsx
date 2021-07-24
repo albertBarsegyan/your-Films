@@ -5,10 +5,13 @@ import Link from 'next/link';
 import CommonLogin from '../components/CommonLogin';
 import Footer from '../components/Footer';
 
+
 export default class Login extends Component {
+ 
   render() {
     return (
       <>
+     
         <div>
           <Header>
             <div className="absolute right-10">

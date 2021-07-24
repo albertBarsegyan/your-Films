@@ -1,7 +1,5 @@
 import * as Yup from 'yup';
 
-
-
 // Using built-in methods
 export const registerScheme = Yup.object({
   firstName: Yup.string()
@@ -23,7 +21,7 @@ export const registerScheme = Yup.object({
     .min(8, 'Password is too short.')
     .max(16, 'Must be less than 16 char.'),
 
-  confirmPassword: Yup.string().oneOf(
+  confirmPassword: Yup.string().required('Password repeat is required').oneOf(
     [Yup.ref('password'), null],
     "Passwords don't match"
   ),
