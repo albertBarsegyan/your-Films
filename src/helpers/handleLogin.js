@@ -5,7 +5,7 @@ export default function handleLogin(values, stateHook, loginHook) {
     const userData = JSON.stringify(
       checkPasswordAndEmail(localStorage.getItem('localUsers'), values)
     );
-    localStorage.setItem('loggedUser', JSON.stringify(userData));
+    localStorage.setItem('loggedUser', userData);
     loginHook(true);
     return;
   }
