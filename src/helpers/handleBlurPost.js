@@ -1,8 +1,70 @@
-export default function handleBlurPost(e, stateList) {
+export default function handleBlurPost(e, id, stateList) {
   const inputValue = e.target.value;
-  if (inputValue.length > 0) {
-    this.setState((prevState) => [...prevState[stateList], inputValue]);
-    console.log(this.state[stateList]);
+
+  const userEmail = JSON.parse(localStorage.getItem('loggedUser')).email;
+  let changedLocalUsersPost = JSON.parse(localStorage.getItem('usersPosts'));
+  let changedStateList;
+  if (e.type === 'blur') {
+    if (!inputValue.length) {
+      changedStateList = this.state[stateList].map((stateItem) => {
+        if (stateItem.id === id) {
+          return {
+            id,
+            postValue: 'Type something in your post or delete it',
+          };
+        }
+        return stateItem;
+      });
+      this.setState(() => {
+        return { [stateList]: [...changedStateList] };
+      });
+      changedLocalUsersPost = changedLocalUsersPost.map((userPostObject) => {
+        if (userPostObject[userEmail]) {
+          return { [userEmail]: changedStateList };
+        }
+        return userPostObject;
+      });
+
+      localStorage.setItem('usersPosts', JSON.stringify(changedLocalUsersPost));
+      return;
+    }
+    Promise.resolve('success')
+      .then(() => {
+        this.setState({ showPopup: true });
+        return true;
+      })
+      .then(() => {
+        setTimeout(() => {
+          this.setState({ showPopup: false });
+        }, 2000);
+      });
+
     return;
   }
+  changedStateList = this.state[stateList].map((stateItem) => {
+    if (stateItem.id === id) {
+      return {
+        id,
+        postValue: inputValue,
+      };
+    }
+    return stateItem;
+  });
+  this.setState(() => {
+    return { [stateList]: [...changedStateList] };
+  });
+  changedLocalUsersPost = changedLocalUsersPost.map((userPostObject) => {
+    if (userPostObject[userEmail]) {
+      return { [userEmail]: changedStateList };
+    }
+    return userPostObject;
+  });
+  localStorage.setItem('usersPosts', JSON.stringify(changedLocalUsersPost));
+  console.log(
+    JSON.parse(localStorage.getItem('usersPosts')),
+    'changed local users post <-'
+  );
+  console.log(this.state[stateList], 'blur event state list');
+
+  return;
 }

@@ -4,7 +4,7 @@ export default class PopUp extends Component {
   render() {
     const { popUpMessage, isError } = this.props;
     const stylesDiv = classNames({
-      'fixed right-10 top-10 px-4 py-2 rounded-xl': true,
+      'fixed right-10 top-10 px-4 py-2 rounded-xl z-10': true,
       'bg-red-500 ': isError,
       'bg-green-500': !isError,
     });
