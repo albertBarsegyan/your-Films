@@ -11,11 +11,9 @@ export default class Home extends Component {
     return (
       <div>
         <Header>
-          <div className="absolute right-10">
-            <Link href="/login" passHref>
-              <CommonButton buttonInnerText="Sign in" />
-            </Link>
-          </div>
+          <Link href="/login" passHref>
+            <CommonButton buttonInnerText="Sign in" />
+          </Link>
         </Header>
         <RegisterComponent />
         <Footer />

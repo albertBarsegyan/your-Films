@@ -20,7 +20,9 @@ export default function Header({ children }) {
           <span className="text-4xl ">Dark-Blog</span>
         </div>
       </div>
-      {children}
+      <div className="absolute right-10 flex flex-row items-center justify-end gap-5">
+        {children}
+      </div>
     </div>
   );
 }

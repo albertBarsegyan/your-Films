@@ -7,15 +7,12 @@ export default function User() {
   const router = useRouter();
   let loggedUser = {};
   if (process.browser) {
-    loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+    loggedUser = JSON.parse(localStorage.getItem('loggedUser')) ?? {};
   }
   useEffect(() => {
     if (isObjectEmpty(loggedUser)) {
       router.push('/404');
     }
-    return () => {
-      localStorage.setItem('loggedUser', JSON.stringify({}));
-    };
   }, []);
 
   // useEffect(() => {
@@ -25,9 +22,14 @@ export default function User() {
   // }, []);
 
   return (
-    <UserContainer
-      firstName={loggedUser.firstName}
-      lastName={loggedUser.lastName}
-    />
+    <div>
+      {!isObjectEmpty(loggedUser) ? (
+        <UserContainer
+          firstName={loggedUser.firstName}
+          lastName={loggedUser.lastName}
+        />
+      ) : null}
+    </div>
   );
+    
 }

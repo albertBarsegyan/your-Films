@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import Header from '../Header';
 import LogOut from './LogOut';
 import UserInfo from './UserInfo';
-
+import PostTemplate from './PostTemplate';
 import handleBlurPost from '../../helpers/handleBlurPost';
 import PopUp from '../PopUp';
 import UserPosts from './UserPosts';
 import handlePostAdd from '../../helpers/handlePostAdd';
 import handleDelete from '../../helpers/handleDelete';
+import CommonButton from '../CommonButton';
+import Link from 'next/link';
 // import handleOnchange from '../../helpers/handleOnchange';
 
 export default class UserContainer extends Component {
@@ -23,38 +25,80 @@ export default class UserContainer extends Component {
     // this.handleOnchange = handleOnchange.bind(this);
   }
   componentDidMount() {
-    const userEmail = JSON.parse(localStorage.getItem('loggedUser')).email;
+    // console.log(JSON.parse(localStorage.getItem('usersPosts')));
+    if (process.browser) {
+      console.log('browser process');
+      let userEmail = JSON.parse(localStorage.getItem('loggedUser')).email;
 
-    let userPostList;
-    if (localStorage.getItem('usersPosts')) {
-      userPostList = JSON.parse(localStorage.getItem('usersPosts')).find(
+      //   // current email posts list
+      let userPostList = JSON.parse(localStorage.getItem('usersPosts')).find(
         (userPostObject) => userPostObject[userEmail]
       );
+
+      if (userPostList) {
+        this.setState((prevState) => {
+          return {
+            postList: [...prevState.postList, ...userPostList[userEmail]],
+          };
+        });
+        return;
+      }
+
+      // current state post list
+      const userPostObject = { [userEmail]: this.state.postList };
+      localStorage.setItem('usersPosts', JSON.stringify([userPostObject]));
     }
-    this.setState(() => {
-      return { postList: [...userPostList[userEmail]] };
-    });
   }
-  componentDidUpdate(prevProps, prevState) {}
+
+  componentDidUpdate(prevProps, prevState) {
+    if (String(prevState.postList) !== String(this.state.postList)) {
+      console.log(this.state.postList, 'state post list changed  to <-');
+      console.log(
+        JSON.parse(localStorage.getItem('usersPosts')),
+        'local storage'
+      );
+    }
+  }
 
   render() {
     const { firstName, lastName } = this.props;
+    const { postList } = this.state;
     return (
       <div>
         {this.state.showPopup ? (
           <PopUp isError={false} popUpMessage="Post Saved" />
         ) : null}
         <Header>
+          <Link href="/registeredUsers" passHref>
+            <CommonButton buttonInnerText="Users" />
+          </Link>
           <LogOut />
         </Header>
         <UserInfo firstName={firstName} lastName={lastName} />
-        <UserPosts
-          onChange={this.handleBlurPost}
-          onClick={() => this.handlePostAdd('postList')}
-          postList={this.state.postList}
-          deletePost={this.handleDelete}
-          onBlur={this.handleBlurPost}
-        />
+        <UserPosts onClick={() => this.handlePostAdd('postList')}>
+          {postList.length > 0
+            ? postList.map((postObject) => {
+                return (
+                  <PostTemplate
+                    value={postObject.postValue}
+                    key={postObject.id}
+                    onChange={(e) =>
+                      this.handleBlurPost(e, postObject.id, 'postList')
+                    }
+                    onBlur={(e) =>
+                      this.handleBlurPost(e, postObject.id, 'postList')
+                    }
+                    deletePost={() =>
+                      this.handleDelete(postObject.id, 'postList')
+                    }
+                    showComments={() => {
+                      'ola';
+                    }}
+                  />
+                );
+              })
+            : null}
+        </UserPosts>
       </div>
     );
   }
