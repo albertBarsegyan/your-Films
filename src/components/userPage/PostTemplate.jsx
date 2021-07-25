@@ -28,7 +28,7 @@ export default class PostTemplate extends Component {
                 buttonInnerText="Delete Post"
                 onClick={deletePost}
               />
-              <CommonButton buttonInnerText="Comments" onClick={showComments} />
+              {/* <CommonButton buttonInnerText="Comments" onClick={showComments} /> */}
             </div>
           </div>
         </div>
