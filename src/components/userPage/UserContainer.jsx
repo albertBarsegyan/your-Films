@@ -25,15 +25,16 @@ export default class UserContainer extends Component {
     // this.handleOnchange = handleOnchange.bind(this);
   }
   componentDidMount() {
-    // console.log(JSON.parse(localStorage.getItem('usersPosts')));
+    console.log(JSON.parse(localStorage.getItem('usersPosts')));
+    
     if (process.browser) {
-      console.log('browser process');
+      //   console.log('browser process');
       let userEmail = JSON.parse(localStorage.getItem('loggedUser')).email;
 
       //   // current email posts list
-      let userPostList = JSON.parse(localStorage.getItem('usersPosts')).find(
+      let userPostList = localStorage.getItem('usersPosts')? JSON.parse(localStorage.getItem('usersPosts')).find(
         (userPostObject) => userPostObject[userEmail]
-      );
+      ):undefined;
 
       if (userPostList) {
         this.setState((prevState) => {
@@ -43,22 +44,17 @@ export default class UserContainer extends Component {
         });
         return;
       }
-
-      // current state post list
+    
+      //   // current state post list
       const userPostObject = { [userEmail]: this.state.postList };
-      localStorage.setItem('usersPosts', JSON.stringify([userPostObject]));
+      const localUsersPostData = JSON.parse(localStorage.getItem('usersPosts')) ?? [];
+      localUsersPostData.push(userPostObject)
+        localStorage.setItem('usersPosts', JSON.stringify(localUsersPostData));
+      // }
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (String(prevState.postList) !== String(this.state.postList)) {
-      console.log(this.state.postList, 'state post list changed  to <-');
-      console.log(
-        JSON.parse(localStorage.getItem('usersPosts')),
-        'local storage'
-      );
-    }
-  }
+  
 
   render() {
     const { firstName, lastName } = this.props;
