@@ -1,4 +1,4 @@
-import hasEmailInLocal from './hasEmailInLocal';
+import hasEmailInLocal from '../helpers/hasEmailInLocal';
 
 export const handleRegistrationSubmit = (formData, stateHook, messageHook) => {
   const userObject = { ...formData };
