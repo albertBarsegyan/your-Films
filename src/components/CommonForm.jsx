@@ -76,7 +76,7 @@ export default function CommonForm() {
       >
         {() => {
           return (
-            <div className="ml-10 w-3/12">
+            <div className="ml-0 md:ml-10 w-3/4 md:w-4/12">
               <div className="text-center py-3 border-b border-gray-800 my-5">
                 <span className="text-xl text-gray-800 ">Register now.</span>
               </div>

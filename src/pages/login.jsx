@@ -11,10 +11,9 @@ export default class Login extends Component {
   render() {
     return (
       <>
-     
         <div>
           <Header>
-            <div className="absolute right-10">
+            <div>
               <Link href="/" passHref>
                 <CommonButton buttonInnerText="Register" />
               </Link>

@@ -5,7 +5,7 @@ import Welcome from './Welcome';
 export default class RegisterComponent extends Component {
   render() {
     return (
-      <div className="flex flex-row items-center justify-center">
+      <div className="flex md:flex-row flex-col-reverse items-center justify-center">
         <CommonForm />
         <Welcome />
       </div>
