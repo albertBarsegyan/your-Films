@@ -21,7 +21,7 @@ export default class UserTemplate extends Component {
           </div>
           <div className="my-5">
             <Link href={'/registeredUsers/' + email} passHref>
-              <CommonButton buttonInnerText="View Posts" />
+              <CommonButton buttonInnerText="Posts" />
             </Link>
           </div>
         </div>
