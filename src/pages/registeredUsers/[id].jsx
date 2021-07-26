@@ -6,7 +6,7 @@ import CommonButton from '../../components/CommonButton';
 import Header from '../../components/Header';
 import LogOut from '../../components/userPage/LogOut';
 import getEmailFromURL from '../../helpers/getEmailFromURL';
-import handleDataByEmail from '../../helpers/handleDataByEmail';
+import handleDataByEmail from '../../handlers/handleDataByEmail';
 import UserPostTemplate from './UserPostTemplate';
 
 export default function DynamicUser() {

@@ -1,7 +1,7 @@
 import { Formik, Form } from 'formik';
 import React, { useState, useEffect } from 'react';
 import handleLogin from '../helpers/handleLogin';
-import { loginScheme } from '../helpers/loginCheme';
+import { loginScheme } from '../validationSchemes/loginCheme';
 import PopUp from '../components/PopUp';
 import CommonButton from './CommonButton';
 import TextField from './TextField';

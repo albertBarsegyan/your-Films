@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { Formik, Form } from 'formik';
 import TextField from './TextField';
-import { registerScheme } from '../helpers/registerScheme';
+import { registerScheme } from '../validationSchemes/registerScheme';
 import GenderCheckGroup from './GenderCheckGroup';
 import CommonButton from './CommonButton';
-import { handleRegistrationSubmit } from '../helpers/handleRegistraionSubmit';
 import ErrorPopUp from './PopUp';
+import { handleRegistrationSubmit } from '../handlers/handleRegistraionSubmit';
 
 export default function CommonForm() {
   const [users, setUsers] = useState([]);

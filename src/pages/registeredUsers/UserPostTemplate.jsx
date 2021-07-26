@@ -2,8 +2,8 @@ import { TextareaAutosize } from '@material-ui/core';
 import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
-// hide comment components
-// import CommonButton from '../../components/CommonButton';
+
+import CommonButton from '../../components/CommonButton';
 
 export default class UserPostTemplate extends Component {
   render() {
@@ -15,9 +15,9 @@ export default class UserPostTemplate extends Component {
             <div className="my-5 flex items-center justify-center">
               <span className="text-2xl">{value}</span>
             </div>
-            {/* <div className="my-5 flex items-center justify-between">
+            <div className="my-5 flex items-center justify-between">
               <CommonButton buttonInnerText="Comments" onClick={showComments} />
-            </div> */}
+            </div>
           </div>
         </div>
       </li>

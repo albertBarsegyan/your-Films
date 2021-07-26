@@ -3,11 +3,11 @@ import Header from '../Header';
 import LogOut from './LogOut';
 import UserInfo from './UserInfo';
 import PostTemplate from './PostTemplate';
-import handleBlurPost from '../../helpers/handleBlurPost';
+import handleBlurPost from '../../handlers/handleBlurPost';
 import PopUp from '../PopUp';
 import UserPosts from './UserPosts';
-import handlePostAdd from '../../helpers/handlePostAdd';
-import handleDelete from '../../helpers/handleDelete';
+import handlePostAdd from '../../handlers/handlePostAdd';
+import handleDelete from '../../handlers/handleDelete';
 import CommonButton from '../CommonButton';
 import Link from 'next/link';
 // import handleOnchange from '../../helpers/handleOnchange';
@@ -25,8 +25,7 @@ export default class UserContainer extends Component {
     // this.handleOnchange = handleOnchange.bind(this);
   }
   componentDidMount() {
-    console.log(JSON.parse(localStorage.getItem('usersPosts')));
-    
+       
     if (process.browser) {
       //   console.log('browser process');
       let userEmail = JSON.parse(localStorage.getItem('loggedUser')).email;

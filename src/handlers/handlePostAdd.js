@@ -1,9 +1,10 @@
-import generateId from './generateId';
+import generateId from '../helpers/generateId';
 
 export default function handlePostAdd(stateList) {
   const postObject = {
     id: generateId(),
     postValue: '',
+    comments: [],
   };
   Promise.resolve('success')
     .then(() => {
@@ -13,23 +14,22 @@ export default function handlePostAdd(stateList) {
       return this.state[stateList];
     })
     .then((postList) => {
+      // current user ,who logged in
       const userEmail = JSON.parse(localStorage.getItem('loggedUser')).email;
 
-      //   email -> [{postObject},{postObject}]
+      //  made object with email
       const userPostList = { [userEmail]: postList };
+      // is exist in local storage
       if (localStorage.getItem('usersPosts')) {
         // all post lists , postObject list
         let localPostsList = JSON.parse(localStorage.getItem('usersPosts'));
 
+        // is there isn't user with this email
         if (!localPostsList.some((postObject) => postObject[userEmail])) {
-          console.log('if there is not user with this email -> ');
           //  adding to local storage post list {postObject}
           localPostsList.push(userPostList);
           localStorage.setItem('usersPosts', JSON.stringify(localPostsList));
-          console.log(
-            localStorage.getItem('usersPosts'),
-            'added to local post list'
-          );
+
           return;
         }
         localPostsList = localPostsList.map((postObject) => {
@@ -39,16 +39,9 @@ export default function handlePostAdd(stateList) {
           return postObject;
         });
         localStorage.setItem('usersPosts', JSON.stringify(localPostsList));
-        console.log(
-          localStorage.getItem('usersPosts'),
-          'changed local post list'
-        );
+
         return;
       }
       localStorage.setItem('usersPosts', JSON.stringify([userPostList]));
-      console.log(
-        'added to usersPost list first time ->',
-        localStorage.getItem('usersPosts')
-      );
     });
 }

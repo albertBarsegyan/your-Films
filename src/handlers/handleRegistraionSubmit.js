@@ -1,4 +1,3 @@
-import firstLetterUpperCase from './firstLetterUpperCase';
 import hasEmailInLocal from './hasEmailInLocal';
 
 export const handleRegistrationSubmit = (formData, stateHook, messageHook) => {
