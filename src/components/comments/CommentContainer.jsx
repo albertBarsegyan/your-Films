@@ -25,7 +25,7 @@ export default function CommentContainer({ commentList, onSubmit, onClick }) {
       </form>
 
       <ul>
-        {commentList.length > 0 ? (
+        {commentList && commentList.length > 0 ? (
           commentList.map((commentObject) => (
             <CommentItem
               key={commentObject.id}
@@ -35,9 +35,11 @@ export default function CommentContainer({ commentList, onSubmit, onClick }) {
             />
           ))
         ) : (
-          <div className="text-center my-5">
-            <span className="text-4xl">There is no comments yet</span>
-          </div>
+          <li>
+            <div className="text-center my-5">
+              <span className="text-4xl">There is no comments yet</span>
+            </div>
+          </li>
         )}
       </ul>
     </div>
