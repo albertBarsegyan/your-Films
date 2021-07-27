@@ -1,4 +1,4 @@
-import checkPasswordAndEmail from './checkPasswordAndEmail';
+import checkPasswordAndEmail from '../helpers/checkPasswordAndEmail';
 
 export default function handleLogin(values, stateHook, loginHook) {
   if (checkPasswordAndEmail(localStorage.getItem('localUsers'), values)) {

@@ -15,12 +15,6 @@ export default function User() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (isObjectEmpty(userData)) {
-  //     router.push('/404');
-  //   }
-  // }, []);
-
   return (
     <div>
       {!isObjectEmpty(loggedUser) ? (

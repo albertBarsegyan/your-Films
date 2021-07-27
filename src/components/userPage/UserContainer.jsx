@@ -31,9 +31,11 @@ export default class UserContainer extends Component {
       let userEmail = JSON.parse(localStorage.getItem('loggedUser')).email;
 
       //   // current email posts list
-      let userPostList = localStorage.getItem('usersPosts')? JSON.parse(localStorage.getItem('usersPosts')).find(
-        (userPostObject) => userPostObject[userEmail]
-      ):undefined;
+      let userPostList = localStorage.getItem('usersPosts')
+        ? JSON.parse(localStorage.getItem('usersPosts')).find(
+            (userPostObject) => userPostObject[userEmail]
+          )
+        : undefined;
 
       if (userPostList) {
         this.setState((prevState) => {
@@ -43,13 +45,13 @@ export default class UserContainer extends Component {
         });
         return;
       }
-    
+
       //   // current state post list
       const userPostObject = { [userEmail]: this.state.postList };
-      const localUsersPostData = JSON.parse(localStorage.getItem('usersPosts')) ?? [];
-      localUsersPostData.push(userPostObject)
-        localStorage.setItem('usersPosts', JSON.stringify(localUsersPostData));
-      // }
+      const localUsersPostData =
+        JSON.parse(localStorage.getItem('usersPosts')) ?? [];
+      localUsersPostData.push(userPostObject);
+      localStorage.setItem('usersPosts', JSON.stringify(localUsersPostData));
     }
   }
 
