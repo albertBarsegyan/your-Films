@@ -12,16 +12,27 @@ import handleAddCommentFunctional from '../../handlers/handleAddCommentFunctiona
 export default function DynamicUser() {
   const router = useRouter();
   let getEmail = getEmailFromURL(router.asPath);
-
+  const [postList, setPostList] = useState(() => {
+    try {
+      // Get from local storage by key
+      const item = handleDataByEmail(
+        getEmail,
+        localStorage.getItem('postsList')
+      );
+      // Parse stored json or if none return initialValue
+      return item ? item : [];
+    } catch (error) {
+      // If error also return initialValue
+      console.log(error);
+      return [];
+    }
+  });
   let getUserObject = { firstName: '', lastName: '' };
-  let localUsersPostList;
+
   if (process.browser) {
     // get user post List
-    localUsersPostList = handleDataByEmail(
-      getEmail,
-      localStorage.getItem('usersPosts')
-    );
-// finding user object from local storage
+
+    // finding user object from local storage
     getUserObject = JSON.parse(localStorage.getItem('localUsers')).find(
       (userObject) => userObject.email === getEmail
     );
@@ -64,7 +75,7 @@ export default function DynamicUser() {
                   );
                 }}
                 onClick={() => {}}
-                commentList={postList.comments}
+                commentList={postObject.comments}
                 key={postObject.id}
                 value={postObject.postValue}
               />
