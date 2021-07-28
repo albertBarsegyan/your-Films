@@ -42,7 +42,9 @@ export default function CommonLogin() {
             <div className="flex flex-col items-center justify-center mt-10">
               <div>
                 <div>
-                  <h1 className="text-gray-900 text-4xl text-center">Login</h1>
+                  <h1 className="text-gray-900 text-4xl text-center">
+                    Sign In
+                  </h1>
                 </div>
                 <div className="mt-10">
                   <Form>
@@ -58,7 +60,7 @@ export default function CommonLogin() {
                         labelInnerText="password"
                       />
                       <div className="flex flex-row items-center justify-center">
-                        <CommonButton type="submit" buttonInnerText="Login" />
+                        <CommonButton type="submit" buttonInnerText="Sign In" />
                       </div>
                     </div>
                   </Form>

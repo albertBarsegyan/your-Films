@@ -8,6 +8,7 @@ import getEmailFromURL from '../../helpers/getEmailFromURL';
 import handleDataByEmail from '../../handlers/handleDataByEmail';
 import UserPostTemplate from '../../components/userPage/UserPostTemplate';
 import handleAddCommentFunctional from '../../handlers/handleAddCommentFunctional';
+import Head from 'next/head';
 
 export default function DynamicUser() {
   const router = useRouter();
@@ -112,6 +113,13 @@ export default function DynamicUser() {
   }, []);
   return (
     <div>
+      <Head>
+        <title>
+          {getUserObject
+            ? `${getUserObject.firstName} ${getUserObject.lastName}'s blog`
+            : 'UserPage'}
+        </title>
+      </Head>
       <Header>
         <Link href="/user" passHref>
           <CommonButton buttonInnerText="My Blog" />

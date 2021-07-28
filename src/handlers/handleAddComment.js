@@ -20,7 +20,6 @@ export default function handleAddComment(e, postId, stateList) {
      }
      return postObject;
    });
-   console.log(changedState, 'changed state object -<');
 
    let localStoragePostData = JSON.parse(
      localStorage.getItem('usersPosts')

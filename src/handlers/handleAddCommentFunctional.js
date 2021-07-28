@@ -19,29 +19,34 @@ export default function handleAddCommentFunctional(
     commentWriter: userEmail,
     comment: inputValue,
   };
-  const changedState = [...stateList];
-  changedState.map((postObject) => {
-    if (postObject.id === postId) {
-      const changedObject = { ...postObject };
-      postObject.comments = [...postObject.comments, commentObject];
-      return changedObject;
-    }
-    return postObject;
-  });
-
-  if (process.browser) {
-    getUserPageEmail = getEmailFromURL(window.location.href);
-    let localStoragePostData = JSON.parse(localStorage.getItem('usersPosts'));
-
-    const localStorageChangedData = localStoragePostData.map((postObject) => {
-      if (postObject[getUserPageEmail]) {
-        return { [getUserPageEmail]: changedState };
+  if (inputValue.length > 0) {
+    const changedState = [...stateList];
+    changedState.map((postObject) => {
+      if (postObject.id === postId) {
+        const changedObject = { ...postObject };
+        postObject.comments = [...postObject.comments, commentObject];
+        return changedObject;
       }
       return postObject;
     });
 
-    localStorage.setItem('usersPosts', JSON.stringify(localStorageChangedData));
-    setStateList(changedState);
-    e.target.reset();
+    if (process.browser) {
+      getUserPageEmail = getEmailFromURL(window.location.href);
+      let localStoragePostData = JSON.parse(localStorage.getItem('usersPosts'));
+
+      const localStorageChangedData = localStoragePostData.map((postObject) => {
+        if (postObject[getUserPageEmail]) {
+          return { [getUserPageEmail]: changedState };
+        }
+        return postObject;
+      });
+
+      localStorage.setItem(
+        'usersPosts',
+        JSON.stringify(localStorageChangedData)
+      );
+      setStateList(changedState);
+      e.target.reset();
+    }
   }
 }

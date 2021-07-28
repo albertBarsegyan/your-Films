@@ -32,7 +32,7 @@ export default function CommonForm() {
         return {
           show: true,
           isError: false,
-          popupMessage: 'Now you can login',
+          popupMessage: 'Now you can Sign in',
         };
       default:
         throw new Error();
@@ -41,7 +41,6 @@ export default function CommonForm() {
   useEffect(() => {
     if (localStorage.getItem('localUsers')) {
       setUsers(() => [...JSON.parse(localStorage.getItem('localUsers'))]);
-      // console.log('did mount state list [common form]', users);
     }
     return () => {
       setUsers([]);

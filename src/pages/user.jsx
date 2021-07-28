@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import UserContainer from '../components/userPage/UserContainer';
@@ -17,6 +18,9 @@ export default function User() {
 
   return (
     <div>
+      <Head>
+        <title>Personal Blog </title>
+      </Head>
       {!isObjectEmpty(loggedUser) ? (
         <UserContainer
           firstName={loggedUser.firstName}

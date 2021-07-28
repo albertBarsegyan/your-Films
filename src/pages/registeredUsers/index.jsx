@@ -5,7 +5,7 @@ import UserTemplate from '../../components/registeredUsers/UserTemplate';
 import LogOut from '../../components/userPage/LogOut';
 import Link from 'next/link';
 import Footer from '../../components/atoms/Footer';
-
+import Head from 'next/head';
 export default function RegisteredUsers() {
   let localUser = [];
   let userEmail;
@@ -18,6 +18,9 @@ export default function RegisteredUsers() {
   }
   return (
     <div className="mt-5">
+      <Head>
+        <title>Registered Users </title>
+      </Head>
       <Header>
         <Link href="/user" passHref>
           <CommonButton buttonInnerText="My Blog" />

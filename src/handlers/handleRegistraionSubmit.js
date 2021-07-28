@@ -13,7 +13,6 @@ export const handleRegistrationSubmit = (formData, stateHook, messageHook) => {
       .then((data) => {
         stateHook(() => data);
         messageHook({ type: 'notification' });
-        console.log(localStorage.getItem('localUsers'), 'local storage  users');
       });
     return;
   }

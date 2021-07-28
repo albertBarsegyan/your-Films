@@ -17,7 +17,6 @@ export default function handleDelete(id, stateList) {
     (stateItem) => stateItem.id !== id
   );
   localStorage.setItem('usersPosts', JSON.stringify(changedLocalUsersPost));
-  console.log('local item deleted ->', localStorage.getItem('usersPosts'));
 
   this.setState(() => {
     return { [stateList]: [...changedStateList] };

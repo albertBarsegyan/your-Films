@@ -6,7 +6,7 @@ import Footer from '../components/atoms/Footer';
 import Header from '../components/atoms/Header';
 import { useRouter } from 'next/router';
 import isObjectEmpty from '../helpers/isObjectEmpty';
-
+import Head from 'next/head';
 export default function Login() {
   const router = useRouter();
   useEffect(() => {
@@ -21,6 +21,9 @@ export default function Login() {
   return (
     <>
       <div>
+        <Head>
+          <title>Sign In Dark-Blog</title>
+        </Head>
         <Header>
           <div>
             <Link href="/" passHref>

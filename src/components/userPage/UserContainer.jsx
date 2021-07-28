@@ -10,7 +10,6 @@ import handlePostAdd from '../../handlers/handlePostAdd';
 import handleDelete from '../../handlers/handleDelete';
 import CommonButton from '../CommonButton';
 import Link from 'next/link';
-import getPostComments from '../../helpers/getPostComments';
 import handleAddComment from '../../handlers/handleAddComment';
 import handleDeleteComment from '../../handlers/handleDeleteComment';
 import { string } from 'prop-types';
@@ -26,14 +25,12 @@ export default class UserContainer extends Component {
     this.handleBlurPost = handleBlurPost.bind(this);
     this.handlePostAdd = handlePostAdd.bind(this);
     this.handleDelete = handleDelete.bind(this);
-    this.getPostComments = getPostComments.bind(this);
     this.handleAddComment = handleAddComment.bind(this);
     this.handleDeleteComment = handleDeleteComment.bind(this);
     this.handleCommentEdit = this.handleCommentEdit.bind(this);
   }
   componentDidMount() {
     if (process.browser) {
-      //   console.log('browser process');
       let userEmail = JSON.parse(localStorage.getItem('loggedUser')).email;
       //   // current email posts list
       let userPostList = localStorage.getItem('usersPosts')

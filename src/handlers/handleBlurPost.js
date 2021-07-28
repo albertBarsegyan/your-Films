@@ -62,11 +62,5 @@ export default function handleBlurPost(e, id, stateList) {
     return userPostObject;
   });
   localStorage.setItem('usersPosts', JSON.stringify(changedLocalUsersPost));
-  console.log(
-    JSON.parse(localStorage.getItem('usersPosts')),
-    'changed local users post <-'
-  );
-  console.log(this.state[stateList], 'blur event state list');
-
   return;
 }
