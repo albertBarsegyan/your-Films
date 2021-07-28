@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CommonButton from '../CommonButton';
-import PostTemplate from './PostTemplate';
+import PropTypes from 'prop-types';
 
 export default class UserPosts extends Component {
   render() {
@@ -16,3 +16,11 @@ export default class UserPosts extends Component {
     );
   }
 }
+UserPosts.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+    PropTypes.func,
+  ]),
+  onClick: PropTypes.func,
+};

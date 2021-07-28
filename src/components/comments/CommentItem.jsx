@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { string, array } from 'prop-types';
+import { string, array, func } from 'prop-types';
 import React, { Component } from 'react';
 import CommonButton from '../CommonButton';
 

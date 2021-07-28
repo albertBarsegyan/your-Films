@@ -20,6 +20,7 @@ export default class PostTemplate extends Component {
       commentList,
       handleAddComment,
       handleDeleteComment,
+      handleCommentEdit
     } = this.props;
 
     return (
@@ -56,6 +57,7 @@ export default class PostTemplate extends Component {
             </div>
             {this.state.toggleComments ? (
               <CommentContainer
+                onChange={(data) => handleCommentEdit(data)}
                 commentList={commentList}
                 onSubmit={handleAddComment}
                 onClick={(data) => handleDeleteComment(data)}

@@ -13,6 +13,8 @@ import Link from 'next/link';
 import getPostComments from '../../helpers/getPostComments';
 import handleAddComment from '../../handlers/handleAddComment';
 import handleDeleteComment from '../../handlers/handleDeleteComment';
+import { string } from 'prop-types';
+import getEmailFromURL from '../../helpers/getEmailFromURL';
 
 export default class UserContainer extends Component {
   constructor(props) {
@@ -27,6 +29,7 @@ export default class UserContainer extends Component {
     this.getPostComments = getPostComments.bind(this);
     this.handleAddComment = handleAddComment.bind(this);
     this.handleDeleteComment = handleDeleteComment.bind(this);
+    this.handleCommentEdit = this.handleCommentEdit.bind(this);
   }
   componentDidMount() {
     if (process.browser) {
@@ -58,6 +61,49 @@ export default class UserContainer extends Component {
     }
   }
 
+  handleCommentEdit = (postId, commentIdAndEvent) => {
+    const commentId = commentIdAndEvent[0];
+    const inputValue = commentIdAndEvent[1].target.value;
+
+    let getUserPageEmail;
+    const changedState = [...this.state.postList].map((postObject) => {
+      if (postObject.id === postId) {
+        const changedObject = { ...postObject };
+        changedObject.comments = [...changedObject.comments].map(
+          (commentObject) => {
+            if (commentObject.id === commentId) {
+              return {
+                ...commentObject,
+                comment: inputValue,
+              };
+            }
+            return commentObject;
+          }
+        );
+        return changedObject;
+      }
+      return postObject;
+    });
+
+    if (process.browser) {
+      getUserPageEmail = getEmailFromURL(window.location.href);
+      let localStoragePostData = JSON.parse(localStorage.getItem('usersPosts'));
+
+      const localStorageChangedData = localStoragePostData.map((postObject) => {
+        if (postObject[getUserPageEmail]) {
+          return { [getUserPageEmail]: changedState };
+        }
+        return postObject;
+      });
+
+      localStorage.setItem(
+        'usersPosts',
+        JSON.stringify(localStorageChangedData)
+      );
+      this.setState({ postList: changedState });
+    }
+  };
+
   render() {
     const { firstName, lastName } = this.props;
     const { postList } = this.state;
@@ -78,6 +124,9 @@ export default class UserContainer extends Component {
             ? postList.map((postObject) => {
                 return (
                   <PostTemplate
+                    handleCommentEdit={(data) =>
+                      this.handleCommentEdit(postObject.id, data)
+                    }
                     value={postObject.postValue}
                     key={postObject.id}
                     commentList={postObject.comments}
@@ -93,7 +142,13 @@ export default class UserContainer extends Component {
                     handleAddComment={(e) =>
                       this.handleAddComment(e, postObject.id, 'postList')
                     }
-                    handleDeleteComment={(commentId)=> this.handleDeleteComment(commentId,postObject.id,'postList')}
+                    handleDeleteComment={(commentId) =>
+                      this.handleDeleteComment(
+                        commentId,
+                        postObject.id,
+                        'postList'
+                      )
+                    }
                   />
                 );
               })
@@ -103,3 +158,7 @@ export default class UserContainer extends Component {
     );
   }
 }
+UserContainer.propTypes = {
+  firstName: string.isRequired,
+  lastName: string.isRequired,
+};
