@@ -1,22 +1,38 @@
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-
 import CommonButton from '../../components/CommonButton';
-
 import Header from '../../components/Header';
 import LogOut from '../../components/userPage/LogOut';
 import getEmailFromURL from '../../helpers/getEmailFromURL';
 import handleDataByEmail from '../../handlers/handleDataByEmail';
 import UserPostTemplate from './UserPostTemplate';
+import handleAddCommentFunctional from '../../handlers/handleAddCommentFunctional';
 
 export default function DynamicUser() {
   const router = useRouter();
-
   let getEmail = getEmailFromURL(router.asPath);
-  let postList;
+  const [postList, setPostList] = useState(() => {
+    try {
+      // Get from local storage by key
+      const item = handleDataByEmail(
+        getEmail,
+        localStorage.getItem('usersPosts')
+      );
+      // Parse stored json or if none return initialValue
+      return item ? item : [];
+    } catch (error) {
+      // If error also return initialValue
+      console.log(error);
+      return [];
+    }
+  });
   let getUserObject = { firstName: '', lastName: '' };
+
   if (process.browser) {
-    postList = handleDataByEmail(getEmail, localStorage.getItem('usersPosts'));
+    // get user post List
+
+    // finding user object from local storage
     getUserObject = JSON.parse(localStorage.getItem('localUsers')).find(
       (userObject) => userObject.email === getEmail
     );
@@ -45,20 +61,32 @@ export default function DynamicUser() {
           </span>
         </div>
       </div>
-
-      {postList && postList.length > 0 ? (
-        postList.map((postObject) => {
-          return (
-            <ul key={postObject.id}>
-              <UserPostTemplate value={postObject.postValue} />
-            </ul>
-          );
-        })
-      ) : (
-        <div className="text-center">
-          <span className="text-4xl">There is no Posts yet</span>
-        </div>
-      )}
+      <ul>
+        {postList && postList.length > 0 ? (
+          postList.map((postObject) => {
+            return (
+              <UserPostTemplate
+                onSubmit={(e) => {
+                  handleAddCommentFunctional(
+                    e,
+                    postObject.id,
+                    postList,
+                    setPostList
+                  );
+                }}
+                onClick={() => {}}
+                commentList={postObject.comments}
+                key={postObject.id}
+                value={postObject.postValue}
+              />
+            );
+          })
+        ) : (
+          <div className="text-center">
+            <span className="text-4xl">There is no Posts yet</span>
+          </div>
+        )}
+      </ul>
     </div>
   );
 }

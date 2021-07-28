@@ -2,13 +2,30 @@ import { TextareaAutosize } from '@material-ui/core';
 import React, { Component } from 'react';
 import CommonButton from '../CommonButton';
 import PropTypes from 'prop-types';
+import CommentContainer from '../comments/CommentContainer';
+
 export default class PostTemplate extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      toggleComments: false,
+    };
+  }
   render() {
-    const { onBlur, deletePost, showComments, value, onChange } = this.props;
+    const {
+      onBlur,
+      deletePost,
+      value,
+      onChange,
+      commentList,
+      handleAddComment,
+      handleDeleteComment,
+    } = this.props;
+
     return (
       <li>
         <div className="flex items-center justify-center my-5">
-          <div className=" w-4/5 md:w-1/2 border-b border-gray-800">
+          <div className=" w-4/5 md:w-1/2 border-b border-green-500">
             <div className="my-5 flex items-center justify-center">
               <TextareaAutosize
                 onChange={onChange}
@@ -28,8 +45,22 @@ export default class PostTemplate extends Component {
                 buttonInnerText="Delete Post"
                 onClick={deletePost}
               />
-              <CommonButton buttonInnerText="Comments" onClick={showComments} />
+              <CommonButton
+                buttonInnerText="Comments"
+                onClick={() => {
+                  this.setState((prev) => ({
+                    toggleComments: !prev.toggleComments,
+                  }));
+                }}
+              />
             </div>
+            {this.state.toggleComments ? (
+              <CommentContainer
+                commentList={commentList}
+                onSubmit={handleAddComment}
+                onClick={(data) => handleDeleteComment(data)}
+              />
+            ) : null}
           </div>
         </div>
       </li>

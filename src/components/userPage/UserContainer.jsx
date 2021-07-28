@@ -10,7 +10,9 @@ import handlePostAdd from '../../handlers/handlePostAdd';
 import handleDelete from '../../handlers/handleDelete';
 import CommonButton from '../CommonButton';
 import Link from 'next/link';
-// import handleOnchange from '../../helpers/handleOnchange';
+import getPostComments from '../../helpers/getPostComments';
+import handleAddComment from '../../handlers/handleAddComment';
+import handleDeleteComment from '../../handlers/handleDeleteComment';
 
 export default class UserContainer extends Component {
   constructor(props) {
@@ -22,14 +24,14 @@ export default class UserContainer extends Component {
     this.handleBlurPost = handleBlurPost.bind(this);
     this.handlePostAdd = handlePostAdd.bind(this);
     this.handleDelete = handleDelete.bind(this);
-    // this.handleOnchange = handleOnchange.bind(this);
+    this.getPostComments = getPostComments.bind(this);
+    this.handleAddComment = handleAddComment.bind(this);
+    this.handleDeleteComment = handleDeleteComment.bind(this);
   }
   componentDidMount() {
-       
     if (process.browser) {
       //   console.log('browser process');
       let userEmail = JSON.parse(localStorage.getItem('loggedUser')).email;
-
       //   // current email posts list
       let userPostList = localStorage.getItem('usersPosts')
         ? JSON.parse(localStorage.getItem('usersPosts')).find(
@@ -52,10 +54,9 @@ export default class UserContainer extends Component {
         JSON.parse(localStorage.getItem('usersPosts')) ?? [];
       localUsersPostData.push(userPostObject);
       localStorage.setItem('usersPosts', JSON.stringify(localUsersPostData));
+      // }
     }
   }
-
-  
 
   render() {
     const { firstName, lastName } = this.props;
@@ -79,6 +80,7 @@ export default class UserContainer extends Component {
                   <PostTemplate
                     value={postObject.postValue}
                     key={postObject.id}
+                    commentList={postObject.comments}
                     onChange={(e) =>
                       this.handleBlurPost(e, postObject.id, 'postList')
                     }
@@ -88,9 +90,10 @@ export default class UserContainer extends Component {
                     deletePost={() =>
                       this.handleDelete(postObject.id, 'postList')
                     }
-                    showComments={() => {
-                      'ola';
-                    }}
+                    handleAddComment={(e) =>
+                      this.handleAddComment(e, postObject.id, 'postList')
+                    }
+                    handleDeleteComment={(commentId)=> this.handleDeleteComment(commentId,postObject.id,'postList')}
                   />
                 );
               })

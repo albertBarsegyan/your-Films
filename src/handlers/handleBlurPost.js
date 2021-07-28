@@ -11,7 +11,7 @@ export default function handleBlurPost(e, id, stateList) {
           return {
             id,
             postValue: 'Type something in your post or delete it',
-            comments: [...stateItem.comments],
+            comments: stateItem.comments,
           };
         }
         return stateItem;
