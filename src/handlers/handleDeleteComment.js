@@ -24,5 +24,4 @@ export default function handleDeleteComment(commentId, postId, stateList) {
   );
   this.setState({ [stateList]: changedState });
   localStorage.setItem('usersPosts', JSON.stringify(localStoragePostData));
-  //   console.log(commentId, postId);
 }

@@ -12,32 +12,63 @@ import handleAddCommentFunctional from '../../handlers/handleAddCommentFunctiona
 export default function DynamicUser() {
   const router = useRouter();
   let getEmail = getEmailFromURL(router.asPath);
+
   const [postList, setPostList] = useState(() => {
-    try {
-      // Get from local storage by key
-      const item = handleDataByEmail(
-        getEmail,
-        localStorage.getItem('usersPosts')
-      );
-      // Parse stored json or if none return initialValue
-      return item ? item : [];
-    } catch (error) {
-      // If error also return initialValue
-      console.log(error);
-      return [];
+    if (process.browser) {
+      return handleDataByEmail(getEmail, localStorage.getItem('usersPosts'));
     }
   });
+  console.log('postList data', postList);
   let getUserObject = { firstName: '', lastName: '' };
 
   if (process.browser) {
-    // get user post List
-
     // finding user object from local storage
     getUserObject = JSON.parse(localStorage.getItem('localUsers')).find(
       (userObject) => userObject.email === getEmail
     );
   }
 
+  const handleDeleteComment = (postId, commentId) => {
+    const changedState = [...postList];
+    let getUserPageEmail;
+    changedState.map((postObject) => {
+      if (postObject.id === postId) {
+        const changedObject = { ...postObject };
+        postObject.comments = [...postObject.comments].filter(
+          (comment) => comment.id !== commentId
+        );
+        return changedObject;
+      }
+      return postObject;
+    });
+
+    if (process.browser) {
+      getUserPageEmail = getEmailFromURL(window.location.href);
+      let localStoragePostData = JSON.parse(localStorage.getItem('usersPosts'));
+
+      const localStorageChangedData = localStoragePostData.map((postObject) => {
+        if (postObject[getUserPageEmail]) {
+          return { [getUserPageEmail]: changedState };
+        }
+        return postObject;
+      });
+
+      localStorage.setItem(
+        'usersPosts',
+        JSON.stringify(localStorageChangedData)
+      );
+      setPostList(changedState);
+    }
+  };
+
+  useEffect(() => {
+    setPostList(() => {
+      let getEmail = getEmailFromURL(window.location.href);
+      if (process.browser) {
+        return handleDataByEmail(getEmail, localStorage.getItem('usersPosts'));
+      }
+    });
+  }, []);
   return (
     <div>
       <Header>
@@ -61,7 +92,7 @@ export default function DynamicUser() {
           </span>
         </div>
       </div>
-      <ul>
+      <ul className="w-full">
         {postList && postList.length > 0 ? (
           postList.map((postObject) => {
             return (
@@ -74,7 +105,9 @@ export default function DynamicUser() {
                     setPostList
                   );
                 }}
-                onClick={() => {}}
+                onClick={(commentId) => {
+                  handleDeleteComment(postObject.id, commentId);
+                }}
                 commentList={postObject.comments}
                 key={postObject.id}
                 value={postObject.postValue}

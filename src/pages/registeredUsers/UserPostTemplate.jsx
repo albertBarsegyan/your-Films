@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 
 import CommonButton from '../../components/CommonButton';
 import CommentContainer from '../../components/comments/CommentContainer';
-import getEmailFromURL from '../../helpers/getEmailFromURL';
-import { SignalCellularNull } from '@material-ui/icons';
+
 
 export default class UserPostTemplate extends Component {
   constructor(props) {
@@ -19,9 +18,9 @@ export default class UserPostTemplate extends Component {
     const { value, commentList, onSubmit, onClick } = this.props;
 
     return (
-      <li>
+      <li className="w-full">
         <div className="flex items-center justify-center my-5">
-          <div className=" w-1/2 border-b border-gray-800">
+          <div className=" w-3/4 border-b border-gray-800">
             <div className="my-5 flex items-center justify-center">
               <span className="text-2xl">{value}</span>
             </div>
@@ -32,7 +31,6 @@ export default class UserPostTemplate extends Component {
                   this.setState((prev) => ({
                     showComments: !prev.showComments,
                   }));
-                  console.log(this.state.showComments);
                 }}
               />
             </div>
@@ -40,7 +38,7 @@ export default class UserPostTemplate extends Component {
               <CommentContainer
                 commentList={commentList}
                 onSubmit={onSubmit}
-                onClick={onClick}
+                onClick={(commentId) => onClick(commentId)}
               />
             ) : null}
           </div>

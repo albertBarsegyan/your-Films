@@ -11,11 +11,12 @@ export default function Header({ children }) {
             priority
             src={logo}
             alt="Page logo"
-            width={70}
-            height={70}
+            width={100}
+            height={100}
             className="rounded-lg"
           />
         </div>
+
         <div className="hidden md:block">
           <span className="text-4xl ">Dark-Blog</span>
         </div>
