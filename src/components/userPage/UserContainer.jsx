@@ -32,7 +32,6 @@ export default class UserContainer extends Component {
     if (process.browser) {
       //   console.log('browser process');
       let userEmail = JSON.parse(localStorage.getItem('loggedUser')).email;
-
       //   // current email posts list
       let userPostList = localStorage.getItem('usersPosts')
         ? JSON.parse(localStorage.getItem('usersPosts')).find(
@@ -46,7 +45,6 @@ export default class UserContainer extends Component {
             postList: [...prevState.postList, ...userPostList[userEmail]],
           };
         });
-        console.log(userPostList, 'users post list');
         return;
       }
 
@@ -95,7 +93,7 @@ export default class UserContainer extends Component {
                     handleAddComment={(e) =>
                       this.handleAddComment(e, postObject.id, 'postList')
                     }
-                    handleDeleteComment={this.handleDeleteComment}
+                    handleDeleteComment={(commentId)=> this.handleDeleteComment(commentId,postObject.id,'postList')}
                   />
                 );
               })

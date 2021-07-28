@@ -58,7 +58,7 @@ export default class PostTemplate extends Component {
               <CommentContainer
                 commentList={commentList}
                 onSubmit={handleAddComment}
-                onClick={handleDeleteComment}
+                onClick={(data) => handleDeleteComment(data)}
               />
             ) : null}
           </div>
