@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core';
-
+import { string } from 'prop-types';
 import React, { Component } from 'react';
 
 export default class CommonButton extends Component {
@@ -15,3 +15,6 @@ export default class CommonButton extends Component {
     );
   }
 }
+CommonButton.propTypes = {
+  buttonInnerText: string.isRequired,
+};

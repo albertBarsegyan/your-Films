@@ -1,10 +1,10 @@
 import React from 'react';
 import CommonButton from '../../components/CommonButton';
-import Header from '../../components/Header';
+import Header from '../../components/atoms/Header';
 import UserTemplate from '../../components/registeredUsers/UserTemplate';
 import LogOut from '../../components/userPage/LogOut';
 import Link from 'next/link';
-
+import Footer from '../../components/atoms/Footer';
 
 export default function RegisteredUsers() {
   let localUser = [];
@@ -42,6 +42,7 @@ export default function RegisteredUsers() {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

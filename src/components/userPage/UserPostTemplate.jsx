@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-
 import PropTypes from 'prop-types';
-
-import CommonButton from '../../components/CommonButton';
-import CommentContainer from '../../components/comments/CommentContainer';
+import CommonButton from '../CommonButton';
+import CommentContainer from '../comments/CommentContainer';
 
 
 export default class UserPostTemplate extends Component {

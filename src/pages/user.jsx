@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect } from 'react';
 import UserContainer from '../components/userPage/UserContainer';
 import isObjectEmpty from '../helpers/isObjectEmpty';
 

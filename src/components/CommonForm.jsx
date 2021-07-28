@@ -4,7 +4,7 @@ import TextField from './TextField';
 import { registerScheme } from '../validationSchemes/registerScheme';
 import GenderCheckGroup from './GenderCheckGroup';
 import CommonButton from './CommonButton';
-import ErrorPopUp from './PopUp';
+import ErrorPopUp from './atoms/PopUp';
 import { handleRegistrationSubmit } from '../handlers/handleRegistraionSubmit';
 
 export default function CommonForm() {

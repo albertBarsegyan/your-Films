@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
 import Link from 'next/link';
-
 import CommonButton from '../components/CommonButton';
 import RegisterComponent from '../components/RegisterComponent';
+import Header from '../components/atoms/Header';
+import Footer from '../components/atoms/Footer';
 
 export default class Home extends Component {
   render() {

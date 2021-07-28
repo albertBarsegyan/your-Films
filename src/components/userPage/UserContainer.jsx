@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import Header from '../Header';
+import Header from '../atoms/Header';
 import LogOut from './LogOut';
 import UserInfo from './UserInfo';
 import PostTemplate from './PostTemplate';
 import handleBlurPost from '../../handlers/handleBlurPost';
-import PopUp from '../PopUp';
-import UserPosts from './UserPosts';
+import PopUp from '../atoms/PopUp';
+import UserPosts from './UserPostsContainer';
 import handlePostAdd from '../../handlers/handlePostAdd';
 import handleDelete from '../../handlers/handleDelete';
 import CommonButton from '../CommonButton';

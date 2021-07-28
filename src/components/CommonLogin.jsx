@@ -1,11 +1,11 @@
 import { Formik, Form } from 'formik';
 import React, { useState, useEffect } from 'react';
 import { loginScheme } from '../validationSchemes/loginCheme';
-import PopUp from '../components/PopUp';
 import CommonButton from './CommonButton';
 import TextField from './TextField';
 import { useRouter } from 'next/router';
 import handleLogin from '../handlers/handleLogin';
+import PopUp from './atoms/PopUp';
 
 export default function CommonLogin() {
   const [showPopup, setShowPopup] = useState(false);

@@ -2,13 +2,12 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import CommonButton from '../../components/CommonButton';
-import Header from '../../components/Header';
+import Header from '../../components/atoms/Header';
 import LogOut from '../../components/userPage/LogOut';
 import getEmailFromURL from '../../helpers/getEmailFromURL';
 import handleDataByEmail from '../../handlers/handleDataByEmail';
-import UserPostTemplate from './UserPostTemplate';
+import UserPostTemplate from '../../components/userPage/UserPostTemplate';
 import handleAddCommentFunctional from '../../handlers/handleAddCommentFunctional';
-
 
 export default function DynamicUser() {
   const router = useRouter();
@@ -20,8 +19,7 @@ export default function DynamicUser() {
     }
   });
 
-  let getUserObject = { firstName: '', lastName: '' };
-
+  let getUserObject;
   if (process.browser) {
     // finding user object from local storage
     getUserObject = JSON.parse(localStorage.getItem('localUsers')).find(

@@ -22,5 +22,5 @@ UserPosts.propTypes = {
     PropTypes.node,
     PropTypes.func,
   ]),
-  onClick: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
 };

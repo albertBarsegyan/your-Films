@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import logo from '../assets/logos/logo.jpg';
-
+import logo from '../../assets/logos/logo.jpg';
+import PropTypes from 'prop-types';
 export default function Header({ children }) {
   return (
     <div className="flex items-center justify-center my-4 flex-col md:flex-row">
@@ -27,3 +27,9 @@ export default function Header({ children }) {
     </div>
   );
 }
+Header.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+};
