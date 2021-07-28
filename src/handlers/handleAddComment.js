@@ -5,23 +5,33 @@ export default function handleAddComment(e, postId, stateList) {
   // comment input value
   let inputValue = new FormData(e.target);
   inputValue = [...inputValue.values()][0];
-  console.log('inputValues', inputValue);
+ 
   const userEmail = JSON.parse(localStorage.getItem('loggedUser')).email;
   const commentObject = {
     id: generateId(),
     commentWriter: userEmail,
     comment: inputValue,
   };
-  const changedState = [...this.state[stateList]];
-  changedState.map((postObject) => {
+  let changedState = [...this.state[stateList]].map((postObject) => {
     if (postObject.id === postId) {
       const changedObject = { ...postObject };
-      postObject.comments = [...postObject.comments, commentObject];
+      changedObject.comments = [...changedObject.comments, commentObject];
       return changedObject;
     }
     return postObject;
   });
-  
+  console.log(changedState, 'changed state object -<');
+
+  let localStoragePostData = JSON.parse(localStorage.getItem('usersPosts')).map(
+    (postObject) => {
+      if (postObject[userEmail]) {
+        return { [userEmail]: changedState };
+      }
+      return postObject;
+    }
+  );
+
   this.setState({ [stateList]: changedState });
+  localStorage.setItem('usersPosts', JSON.stringify(localStoragePostData));
   e.target.reset();
 }

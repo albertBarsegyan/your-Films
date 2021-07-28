@@ -17,7 +17,7 @@ export default function DynamicUser() {
       // Get from local storage by key
       const item = handleDataByEmail(
         getEmail,
-        localStorage.getItem('postsList')
+        localStorage.getItem('usersPosts')
       );
       // Parse stored json or if none return initialValue
       return item ? item : [];

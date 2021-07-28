@@ -39,8 +39,8 @@ export default function handleAddCommentFunctional(
       }
       return postObject;
     });
-    console.log(localStoragePostData);
-    localStorage.setItem('postsList', JSON.stringify(localStorageChangedData));
+
+    localStorage.setItem('usersPosts', JSON.stringify(localStorageChangedData));
     setStateList(changedState);
     e.target.reset();
   }
