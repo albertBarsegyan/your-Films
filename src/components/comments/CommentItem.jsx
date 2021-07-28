@@ -1,6 +1,5 @@
-import { TextField } from '@material-ui/core';
 import classNames from 'classnames';
-
+import { string, array } from 'prop-types';
 import React, { Component } from 'react';
 import CommonButton from '../CommonButton';
 
@@ -12,10 +11,10 @@ export default class CommentItem extends Component {
     };
   }
   render() {
-    const { commentEmail, comment, onClick } = this.props;
+    const { commentEmail, comment, onClick, onChange } = this.props;
     const { isEditable } = this.state;
     const userEmail = JSON.parse(localStorage.getItem('loggedUser')).email;
-
+    // current user comment style
     const styles = classNames({
       'text-xl': true,
       'text-green-600': userEmail === commentEmail,
@@ -29,11 +28,15 @@ export default class CommentItem extends Component {
           </div>
           <div className="mx-5">
             {isEditable ? (
-              <input
-                className="text-xl text-gray-600"
-                type="text"
-                value={comment}
-              />
+              // input for comment changing
+              <div className="w-11/12">
+                <input
+                  onChange={(e) => onChange(e)}
+                  className="w-full text-center text-xl px-3 py-2 border border-gray-600 text-gray-600 "
+                  type="text"
+                  value={comment}
+                />
+              </div>
             ) : (
               <span className="text-xl text-gray-600">{comment}</span>
             )}
@@ -43,8 +46,9 @@ export default class CommentItem extends Component {
               <div>
                 <CommonButton
                   onClick={(e) => {
-                    // handleEdit(e);
-                    this.setState((prev) => !prev.isEditable);
+                    this.setState((prev) => ({
+                      isEditable: !prev.isEditable,
+                    }));
                   }}
                   buttonInnerText={isEditable ? 'Save' : 'Edit'}
                 />
@@ -59,3 +63,10 @@ export default class CommentItem extends Component {
     );
   }
 }
+// proptype rules
+CommentItem.propTypes = {
+  commentEmail: string.isRequired,
+  comment: string.isRequired,
+  onClick: func.isRequired,
+  onChange: func.isRequired,
+};

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React, { Component } from 'react';
 import CommonButton from '../CommonButton';
-
+import { string } from 'prop-types';
 export default class UserTemplate extends Component {
   render() {
     const { firstName, lastName, email } = this.props;
@@ -29,3 +29,9 @@ export default class UserTemplate extends Component {
     );
   }
 }
+// proptype rules
+UserTemplate.propTypes = {
+  firstName: string.isRequired,
+  lastName: string.isRequired,
+  email: string.isRequired,
+};

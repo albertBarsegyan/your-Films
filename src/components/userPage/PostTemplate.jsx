@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import CommonButton from '../CommonButton';
 import PropTypes from 'prop-types';
 import CommentContainer from '../comments/CommentContainer';
-
+import { func, string, array } from 'prop-types';
 export default class PostTemplate extends Component {
   constructor(props) {
     super(props);
@@ -68,7 +68,13 @@ export default class PostTemplate extends Component {
   }
 }
 PostTemplate.propTypes = {
-  value: PropTypes.string,
+  value: string,
+  onBlur: func.isRequired,
+  deletePost: func.isRequired,
+  onChange: func.isRequired,
+  commentList: array,
+  handleAddComment: func.isRequired,
+  handleDeleteComment: func.isRequired,
 };
 PostTemplate.defaultProps = {
   value: '',

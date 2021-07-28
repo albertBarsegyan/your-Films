@@ -9,6 +9,7 @@ import handleDataByEmail from '../../handlers/handleDataByEmail';
 import UserPostTemplate from './UserPostTemplate';
 import handleAddCommentFunctional from '../../handlers/handleAddCommentFunctional';
 
+
 export default function DynamicUser() {
   const router = useRouter();
   let getEmail = getEmailFromURL(router.asPath);
@@ -18,7 +19,7 @@ export default function DynamicUser() {
       return handleDataByEmail(getEmail, localStorage.getItem('usersPosts'));
     }
   });
-  console.log('postList data', postList);
+
   let getUserObject = { firstName: '', lastName: '' };
 
   if (process.browser) {
@@ -36,6 +37,48 @@ export default function DynamicUser() {
         const changedObject = { ...postObject };
         postObject.comments = [...postObject.comments].filter(
           (comment) => comment.id !== commentId
+        );
+        return changedObject;
+      }
+      return postObject;
+    });
+
+    if (process.browser) {
+      getUserPageEmail = getEmailFromURL(window.location.href);
+      let localStoragePostData = JSON.parse(localStorage.getItem('usersPosts'));
+
+      const localStorageChangedData = localStoragePostData.map((postObject) => {
+        if (postObject[getUserPageEmail]) {
+          return { [getUserPageEmail]: changedState };
+        }
+        return postObject;
+      });
+
+      localStorage.setItem(
+        'usersPosts',
+        JSON.stringify(localStorageChangedData)
+      );
+      setPostList(changedState);
+    }
+  };
+
+  const handleCommentChange = (postId, commentIdAndEvent) => {
+    const commentId = commentIdAndEvent[0][0];
+    const inputValue = commentIdAndEvent[0][1].target.value;
+    let getUserPageEmail;
+    const changedState = [...postList].map((postObject) => {
+      if (postObject.id === postId) {
+        const changedObject = { ...postObject };
+        changedObject.comments = [...changedObject.comments].map(
+          (commentObject) => {
+            if (commentObject.id === commentId) {
+              return {
+                ...commentObject,
+                comment: inputValue,
+              };
+            }
+            return commentObject;
+          }
         );
         return changedObject;
       }
@@ -111,6 +154,7 @@ export default function DynamicUser() {
                 commentList={postObject.comments}
                 key={postObject.id}
                 value={postObject.postValue}
+                onChange={(data) => handleCommentChange(postObject.id, data)}
               />
             );
           })

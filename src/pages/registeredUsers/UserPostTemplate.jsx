@@ -15,12 +15,12 @@ export default class UserPostTemplate extends Component {
   }
 
   render() {
-    const { value, commentList, onSubmit, onClick } = this.props;
+    const { value, commentList, onSubmit, onClick, onChange } = this.props;
 
     return (
       <li className="w-full">
         <div className="flex items-center justify-center my-5">
-          <div className=" w-3/4 border-b border-gray-800">
+          <div className="w-3/4 md:w-1/2 border-b border-gray-800">
             <div className="my-5 flex items-center justify-center">
               <span className="text-2xl">{value}</span>
             </div>
@@ -39,6 +39,7 @@ export default class UserPostTemplate extends Component {
                 commentList={commentList}
                 onSubmit={onSubmit}
                 onClick={(commentId) => onClick(commentId)}
+                onChange={(data) => onChange([data])}
               />
             ) : null}
           </div>

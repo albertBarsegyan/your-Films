@@ -2,8 +2,13 @@ import React from 'react'
 import CommentItem from './CommentItem';
 import CommonButton from '../CommonButton';
 import { Input } from '@material-ui/core';
-
-export default function CommentContainer({ commentList, onSubmit, onClick }) {
+import { func, array } from 'prop-types';
+export default function CommentContainer({
+  commentList,
+  onSubmit,
+  onClick,
+  onChange,
+}) {
   return (
     <div>
       <div className="text-center my-5">
@@ -11,7 +16,7 @@ export default function CommentContainer({ commentList, onSubmit, onClick }) {
       </div>
       <form onSubmit={onSubmit}>
         <div className="flex items-center justify-center w-full gap-3">
-          <div className="w-3/4">
+          <div className="w-3/4 md:w-1/2">
             <Input
               name="comment"
               fullWidth={true}
@@ -32,6 +37,9 @@ export default function CommentContainer({ commentList, onSubmit, onClick }) {
               commentEmail={commentObject.commentWriter}
               comment={commentObject.comment}
               onClick={() => onClick(commentObject.id)}
+              onChange={(targetValue) =>
+                onChange([commentObject.id, targetValue])
+              }
             />
           ))
         ) : (
@@ -45,3 +53,10 @@ export default function CommentContainer({ commentList, onSubmit, onClick }) {
     </div>
   );
 }
+// proptype rules
+CommentContainer.propTypes = {
+  commentList: array.isRequired,
+  onSubmit: func.isRequired,
+  onClick: func.isRequired,
+  onChange: func.isRequired,
+};
