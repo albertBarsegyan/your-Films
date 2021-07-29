@@ -1,34 +1,17 @@
+<p align="center">
+  <a href="https://black-white-blog.vercel.app/">
+   <img style="border-radius:50%" src="./public/markDown/logo.png" alt="Dark-Blog" width='100'/>
+  </a>
+  
+  
+  
+ # Welcome to Dark-Blog project
+
+I present to you a small blog concept that works with the help of local storage  
+---
+  ![Welcome page](./public/markDown/welcomePage.png)
+---
+  * Registration validation with Formik and Yup
+  * All your incoming data is stored in local storage (you can't lose your data even if reloading the page)
 
 
-
-
-
-# Welcome to Dark-Blog project
-
-I present to you a small blog concept that works with the help of local storage
-
-
-
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
