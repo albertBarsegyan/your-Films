@@ -7,7 +7,6 @@ export default class RegisterComponent extends Component {
     return (
       <div className="flex md:flex-row flex-col-reverse items-center justify-center">
         <CommonForm />
-        <Welcome />
       </div>
     );
   }

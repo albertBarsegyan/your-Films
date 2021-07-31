@@ -1,20 +1,14 @@
 import React from 'react';
-import Image from 'next/image';
-import logo from '../../assets/logos/logo.jpg';
+
+
 import PropTypes from 'prop-types';
+import CommonMovieIcon from '../headerIcon/CommonMovieIcon';
 export default function Header({ children }) {
   return (
     <div className="flex items-center justify-center my-4 flex-col md:flex-row">
       <div className="flex flex-row items-center justify-center gap">
         <div>
-          <Image
-            priority
-            src={logo}
-            alt="Page logo"
-            width={100}
-            height={100}
-            className="rounded-lg"
-          />
+          <CommonMovieIcon />
         </div>
 
         <div className="hidden md:block">

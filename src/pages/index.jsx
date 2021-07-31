@@ -8,7 +8,7 @@ import Head from 'next/head';
 export default class Home extends Component {
   render() {
     return (
-      <div>
+      <div className="bg-background-1 h-screen mix-blend-darken bg-gray-900">
         <Head>
           <title>Welcome to Dark-Blog </title>
         </Head>
