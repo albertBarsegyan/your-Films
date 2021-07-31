@@ -2,6 +2,9 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+* {
+  outline: 0;
+}
 html,
 body {
   padding: 0;

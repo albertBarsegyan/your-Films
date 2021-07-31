@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { Formik, Form } from 'formik';
-import TextField from './TextField';
-import { registerScheme } from '../validationSchemes/registerScheme';
+import { registerScheme } from '../../validationSchemes/registerScheme';
 import GenderCheckGroup from './GenderCheckGroup';
-import CommonButton from './CommonButton';
-import ErrorPopUp from './atoms/PopUp';
-import { handleRegistrationSubmit } from '../handlers/handleRegistraionSubmit';
-
+import ErrorPopUp from '../atoms/PopUp';
+import { handleRegistrationSubmit } from '../../handlers/handleRegistraionSubmit';
+import PrimaryButton from '../buttons/PrimaryButton';
+import TextField from '../atoms/TextField';
+import { useRouter } from 'next/router';
 export default function CommonForm() {
   const [users, setUsers] = useState([]);
+  const router = useRouter();
   const [popup, dispatch] = useReducer(reducer, {
     show: false,
     isError: false,
@@ -28,12 +29,6 @@ export default function CommonForm() {
           isError: true,
           popupMessage: '',
         };
-      case 'notification':
-        return {
-          show: true,
-          isError: false,
-          popupMessage: 'Now you can Sign in',
-        };
       default:
         throw new Error();
     }
@@ -51,7 +46,7 @@ export default function CommonForm() {
     setTimeout(() => {
       dispatch({ type: 'hide' });
     }, 4000);
-  }, [popup]);
+  }, [popup.show]);
 
   return (
     <>
@@ -69,15 +64,17 @@ export default function CommonForm() {
         }}
         validationSchema={registerScheme}
         onSubmit={(formData, { resetForm }) => {
-          handleRegistrationSubmit(formData, setUsers, dispatch);
+          handleRegistrationSubmit(formData, setUsers, dispatch)
+            ? router.push('/user')
+            : null;
           resetForm();
         }}
       >
         {() => {
           return (
             <div className="ml-0 md:ml-10 w-3/4 md:w-4/12">
-              <div className="text-center py-3 border-b border-gray-800 my-5">
-                <span className="text-xl text-gray-800 ">Register now.</span>
+              <div className="text-center py-3 border-b border-primary my-5">
+                <span className="text-2xl text-primary">Register now.</span>
               </div>
               <Form>
                 <div className="flex flex-col items-center justify-center">
@@ -104,7 +101,7 @@ export default function CommonForm() {
                   />
                   <GenderCheckGroup />
                   <div>
-                    <CommonButton type="submit" buttonInnerText="Register" />
+                    <PrimaryButton type="submit">Register</PrimaryButton>
                   </div>
                 </div>
               </Form>

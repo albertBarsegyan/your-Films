@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import UserContainer from '../components/userPage/UserContainer';
+import Header from '../components/atoms/Header';
+import MenuBlock from '../components/userMenu/MenuBlock';
 import isObjectEmpty from '../helpers/isObjectEmpty';
 
 export default function User() {
@@ -21,12 +22,9 @@ export default function User() {
       <Head>
         <title>Personal Blog </title>
       </Head>
-      {!isObjectEmpty(loggedUser) ? (
-        <UserContainer
-          firstName={loggedUser.firstName}
-          lastName={loggedUser.lastName}
-        />
-      ) : null}
+      <Header>
+        <MenuBlock />
+      </Header>
     </div>
   );
 }

@@ -6,10 +6,10 @@ export default class GenderCheckGroup extends Component {
     return (
       <div className="my-4">
         <div className="text-center">
-          <span>Choose Gender</span>
+          <span className="text-primary">Choose Gender</span>
         </div>
         <div className="mx-2 inline-block">
-          <label>
+          <label className="text-primary">
             <Field
               className="mx-2"
               type="radio"
@@ -21,7 +21,7 @@ export default class GenderCheckGroup extends Component {
           </label>
         </div>
         <div className="mx-2 inline-block">
-          <label>
+          <label className="text-primary">
             <Field
               className="mx-2"
               type="radio"

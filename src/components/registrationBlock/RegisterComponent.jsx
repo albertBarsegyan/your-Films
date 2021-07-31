@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CommonForm from './CommonForm';
-import Welcome from '../components/atoms/Welcome';
 
 export default class RegisterComponent extends Component {
   render() {
