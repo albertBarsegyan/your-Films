@@ -6,6 +6,7 @@ export const BY_GENRES = (genreId) => `&with_genres=${genreId}`;
 // genre list
 export const getGenreList = () =>
   `${BASE_URL()}/genre/movie/list${AUTH(API_KEY())}`;
+// get popular films list
 export const getPopularList = () =>
   `${BASE_URL()}${popularList()}${AUTH(API_KEY())}`;
 // get by genre

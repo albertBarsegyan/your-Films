@@ -1,10 +1,12 @@
 import React from 'react';
 import FilmBlock from './FilmBlock';
 
-export default function FilmList() {
+export default function FilmList({ filmList }) {
   return (
     <div>
-      <FilmBlock />
+      {filmList.map((film,index) => {
+        return <FilmBlock key={index} />;
+      })}
     </div>
   );
 }
