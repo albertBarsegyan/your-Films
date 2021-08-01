@@ -3,10 +3,11 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Header from '../components/atoms/Header';
+import FilmBlock from '../components/filmBlock/FilmContainer/FilmBlock';
+import FilmList from '../components/filmBlock/FilmContainer/FilmList';
 import GenreContainer from '../components/filmBlock/genres/GenreContainer';
 import SearchContainer from '../components/search/SearchContainer';
 import MenuBlock from '../components/userMenu/MenuBlock';
-import { getGenreListURL } from '../helpers/filmAPI/APIAuth';
 import isObjectEmpty from '../helpers/isObjectEmpty';
 
 export default function User() {
@@ -23,7 +24,7 @@ export default function User() {
   }, []);
 
   return (
-    <div className="relative">
+    <div>
       <Head>
         <title>Personal Blog </title>
       </Head>
@@ -31,7 +32,10 @@ export default function User() {
         <MenuBlock />
       </Header>
       <SearchContainer />
-      <GenreContainer />
+      <div className="flex flex-col md:flex-row">
+        <GenreContainer />
+        <FilmList />
+      </div>
     </div>
   );
 }
