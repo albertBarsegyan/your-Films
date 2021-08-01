@@ -9,8 +9,8 @@ import FilmList from '../components/filmBlock/FilmContainer/FilmList';
 import GenreContainer from '../components/filmBlock/genres/GenreContainer';
 import SearchContainer from '../components/search/SearchContainer';
 import MenuBlock from '../components/userMenu/MenuBlock';
-import { getPopularList } from '../helpers/filmAPI/getFilmList';
 import isObjectEmpty from '../helpers/isObjectEmpty';
+import { getPopularList } from '../services/genreService';
 
 export default function User() {
   const router = useRouter();
@@ -26,6 +26,7 @@ export default function User() {
       router.push('/404');
       return;
     }
+    getPopularList().then((res) => setFilmList(res));
   }, []);
 
   return (

@@ -37,9 +37,7 @@ export default function CommonForm() {
     if (localStorage.getItem('localUsers')) {
       setUsers(() => [...JSON.parse(localStorage.getItem('localUsers'))]);
     }
-    return () => {
-      setUsers([]);
-    };
+
   }, []);
 
   useEffect(() => {

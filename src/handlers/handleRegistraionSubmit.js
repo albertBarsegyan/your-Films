@@ -9,7 +9,7 @@ export const handleRegistrationSubmit = (formData, stateHook, messageHook) => {
     Promise.resolve('success')
       .then(() => {
         localStorage.setItem('localUsers', JSON.stringify([userObject]));
-        return JSON.parse(localStorage.getItem('localUser'));
+        return JSON.parse(localStorage.getItem('localUsers'));
       })
       .then((data) => {
         stateHook(() => data);

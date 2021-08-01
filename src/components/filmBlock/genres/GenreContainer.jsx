@@ -2,26 +2,21 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Children } from 'react';
 import {
-  getMoviesByGenre,
-  getGenreList,
+  getMoviesByGenreUrl,
+  getGenreListUrl,
 } from '../../../helpers/filmAPI/getFilmList';
-
+import { getGenreList } from '../../../services/genreService';
 import MenuButton from '../../buttons/MenuButton';
 import PrimaryButton from '../../buttons/PrimaryButton';
 
 export default function GenreContainer({ onClick }) {
   const [genreList, setGenreList] = useState([]);
   const [showGenres, setShowGenres] = useState(true);
-  useEffect(() => {
-    axios
-      .get(getGenreList())
-      .then((response) => {
-        const { genres } = response.data;
-        setGenreList(genres);
 
-        return true;
-      })
-      .catch((err) => console.log(err.message));
+  useEffect(() => {
+    getGenreList().then((data) => {
+      setGenreList(data);
+    });
   }, []);
   2;
   return (
