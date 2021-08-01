@@ -2,7 +2,8 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-* {
+
+input[type=text]:focus {
   outline: 0;
 }
 html,

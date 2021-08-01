@@ -21,24 +21,22 @@ export default function Login() {
     }
   }, []);
   return (
-    <div className="bg-gray-500">
-      <div className="bg-background-2 h-screen bg-blend-darken">
-        <div>
-          <Head>
-            <title>Sign In Your-Films</title>
-          </Head>
-          <Header>
-            <div>
-              <LinkButton href="/" passHref>
-                Sign up
-              </LinkButton>
-            </div>
-          </Header>
-          <CommonLogin />
-        </div>
-        <div>
-          <Footer />
-        </div>
+    <div className="bg-background-2 bg-gray-500 h-screen bg-blend-darken">
+      <div>
+        <Head>
+          <title>Sign In Your-Films</title>
+        </Head>
+        <Header>
+          <div>
+            <LinkButton href="/" passHref>
+              Sign up
+            </LinkButton>
+          </div>
+        </Header>
+        <CommonLogin />
+      </div>
+      <div>
+        <Footer />
       </div>
     </div>
   );
