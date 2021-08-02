@@ -10,8 +10,8 @@ export const getGenreList = async () => {
   return genres || [];
 };
 
-export const getPopularList = async () => {
-  const response = await axios.get(getPopularListUrl());
+export const getPopularList = async (page) => {
+  const response = await axios.get(getPopularListUrl(page));
   const { results } = response.data;
   return results || [];
 };

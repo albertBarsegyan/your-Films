@@ -20,8 +20,8 @@ export default function GenreContainer({ onClick }) {
   }, []);
   2;
   return (
-    <div className="relative left-0 -top-0 py-10 md:w-1/6 w-full">
-      <div className="mx-2 my-2">
+    <div className="relative left-0 top-5 md:-top-40 py-10 md:w-1/6 w-full">
+      <div className="mx-2 my-2 text-center">
         <PrimaryButton
           primary={false}
           onClick={() => setShowGenres((prev) => !prev)}

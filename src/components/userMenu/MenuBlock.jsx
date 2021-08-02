@@ -7,7 +7,7 @@ export default function MenuBlock() {
   const [showMenu, setShowMenu] = useState(false);
   return (
     <div>
-      <div className="relative">
+      <div className="relative z-10">
         <div>
           <div className="w-full bg-transparent border border-primary text-primary px-4 py-2 text-2xl text-center hover:border-transparent duration-100">
             <button type="button" onClick={() => setShowMenu((prev) => !prev)}>

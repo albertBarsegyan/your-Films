@@ -14,7 +14,10 @@ import { getPopularList } from '../services/genreService';
 
 export default function User() {
   const router = useRouter();
-  const [filmList, setFilmList] = useState([]);
+  const [filmData, setFilmData] = useState({
+    filmList: [],
+    page: 1,
+  });
   let loggedUser = {};
 
   if (process.browser) {
@@ -26,14 +29,36 @@ export default function User() {
       router.push('/404');
       return;
     }
-    getPopularList().then((res) => {
-      setFilmList(res);
-      console.log(res);
+    getPopularList(1).then((res) => {
+      setFilmData((prev) => {
+        return {
+          ...prev,
+          filmList: res,
+        };
+      });
     });
   }, []);
+  useEffect(() => {
+    getPopularList(filmData.page).then((res) => {
+      setFilmData((prev) => {
+        return {
+          ...prev,
+          filmList: [...prev.filmList, ...res],
+        };
+      });
+    });
+  }, [filmData.page]);
+  const incrementPage = () => {
+    setFilmData((prev) => {
+      return {
+        ...prev,
+        page: prev.page + 1,
+      };
+    });
+  };
 
   return (
-    <div>
+    <div className="relative">
       <Head>
         <title>Personal Blog </title>
       </Head>
@@ -43,7 +68,7 @@ export default function User() {
       <SearchContainer />
       <div className="flex flex-col md:flex-row">
         <GenreContainer />
-        <FilmList filmList={filmList} />
+        <FilmList filmList={filmData.filmList} onClick={incrementPage} />
       </div>
     </div>
   );
