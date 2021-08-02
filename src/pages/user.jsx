@@ -26,7 +26,10 @@ export default function User() {
       router.push('/404');
       return;
     }
-    getPopularList().then((res) => setFilmList(res));
+    getPopularList().then((res) => {
+      setFilmList(res);
+      console.log(res);
+    });
   }, []);
 
   return (

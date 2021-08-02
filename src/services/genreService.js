@@ -13,5 +13,5 @@ export const getGenreList = async () => {
 export const getPopularList = async () => {
   const response = await axios.get(getPopularListUrl());
   const { results } = response.data;
-  return results;
+  return results || [];
 };
