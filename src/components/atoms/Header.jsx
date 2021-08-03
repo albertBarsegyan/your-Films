@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import LinkButton from '../buttons/LinkButton';
 import PrimaryButton from '../buttons/PrimaryButton';
 
 export default function Header({ children }) {
@@ -6,7 +7,9 @@ export default function Header({ children }) {
     <div className="flex items-center justify-center py-4 flex-col md:flex-row">
       <div className="flex flex-row items-center justify-center gap">
         <div>
-          <PrimaryButton type="button">Your-Films</PrimaryButton>
+          <LinkButton href="/user" passHref>
+            Your-Films
+          </LinkButton>
         </div>
 
         <div className="hidden md:block ml-2">

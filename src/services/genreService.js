@@ -16,8 +16,8 @@ export const getPopularList = async (page) => {
   const { results } = response.data;
   return results || [];
 };
-export const getMoviesByGenre = async (id) => {
-  const response = await axios.get(getMoviesByGenreUrl(id));
+export const getMoviesByGenre = async (id, page) => {
+  const response = await axios.get(getMoviesByGenreUrl(id, page));
   const { results } = response.data;
   return results || [];
 };

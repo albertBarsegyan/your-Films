@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import FilmBlock from './FilmBlock';
 import { array } from 'prop-types';
 import PrimaryButton from '../../buttons/PrimaryButton';
-
 export default function FilmList({ filmList, onClick, genre }) {
   return (
     <div className="my-5">
@@ -22,6 +21,7 @@ export default function FilmList({ filmList, onClick, genre }) {
           Load More
         </PrimaryButton>
       </div>
+      
     </div>
   );
 }

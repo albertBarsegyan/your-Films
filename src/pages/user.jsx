@@ -3,8 +3,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useEffect, useReducer } from 'react';
+import Footer from '../components/atoms/Footer';
 import Header from '../components/atoms/Header';
-import FilmBlock from '../components/filmBlock/FilmContainer/FilmBlock';
 import FilmList from '../components/filmBlock/FilmContainer/FilmList';
 import GenreContainer from '../components/filmBlock/genres/GenreContainer';
 import SearchContainer from '../components/search/SearchContainer';
@@ -18,7 +18,7 @@ export default function User() {
     filmList: [],
     page: 1,
   });
-  const [genreName, setGenreName] = useState({});
+  const [genre, setGenre] = useState({ id: 16, name: 'Animation' });
   let loggedUser = {};
 
   if (process.browser) {
@@ -30,7 +30,7 @@ export default function User() {
       router.push('/404');
       return;
     }
-    getPopularList(1).then((res) => {
+    getMoviesByGenre(genre.id, 1).then((res) => {
       setFilmData((prev) => {
         return {
           ...prev,
@@ -40,25 +40,28 @@ export default function User() {
     });
   }, []);
 
-  useEffect(() => {
-    getPopularList(filmData.page).then((res) => {
-      setFilmData((prev) => {
-        return {
-          ...prev,
-          filmList: [...prev.filmList, ...res],
-        };
-      });
-    });
-  }, [filmData.page]);
-
   // load more button event
   const incrementPage = () => {
-    setFilmData((prev) => {
-      return {
-        ...prev,
-        page: prev.page + 1,
-      };
-    });
+    Promise.resolve('success')
+      .then(() => {
+        setFilmData((prev) => {
+          return {
+            ...prev,
+            page: prev.page + 1,
+          };
+        });
+        return true;
+      })
+      .then(() => {
+        getMoviesByGenre(genre.id, filmData.page).then((res) => {
+          setFilmData((prev) => {
+            return {
+              ...prev,
+              filmList: [...prev.filmList, ...res],
+            };
+          });
+        });
+      });
   };
   const showMoviesByGenre = (genreObject) => {
     getMoviesByGenre(genreObject.id, 1).then((response) => {
@@ -67,7 +70,7 @@ export default function User() {
         filmList: response,
       });
     });
-    setGenreName({ ...genreObject });
+    setGenre(genreObject);
   };
   return (
     <div className="relative">
@@ -83,11 +86,12 @@ export default function User() {
           onClick={(genreObject) => showMoviesByGenre(genreObject)}
         />
         <FilmList
-          genre={genreName && genreName.name}
+          genre={genre && genre.name}
           filmList={filmData.filmList}
           onClick={incrementPage}
         />
       </div>
+      <Footer />
     </div>
   );
 }
