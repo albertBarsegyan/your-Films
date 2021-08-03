@@ -21,7 +21,6 @@ export default function FilmList({ filmList, onClick, genre }) {
           Load More
         </PrimaryButton>
       </div>
-      
     </div>
   );
 }

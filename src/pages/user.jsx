@@ -16,11 +16,12 @@ export default function User() {
   const router = useRouter();
   const [filmData, setFilmData] = useState({
     filmList: [],
+    favorites: [],
     page: 1,
   });
   const [genre, setGenre] = useState({ id: 16, name: 'Animation' });
-  let loggedUser = {};
 
+  let loggedUser = {};
   if (process.browser) {
     loggedUser = JSON.parse(localStorage.getItem('loggedUser')) ?? {};
   }

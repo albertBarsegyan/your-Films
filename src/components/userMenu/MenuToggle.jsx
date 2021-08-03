@@ -1,24 +1,32 @@
 import React from 'react';
-
-import MenuLink from '../buttons/MenuLink';
+import { useRouter } from 'next/router';
+import MenuButton from '../buttons/MenuButton';
 
 export default function MenuToggle() {
+  const router = useRouter();
+  function handleLogOut() {
+    if (process.browser) {
+      localStorage.setItem('loggedUser', '{}');
+    }
+    router.push('/');
+  }
+
   return (
     <div>
       <ul className="flex flex-col w-full">
         <li>
           <div>
-            <MenuLink href="/">Account</MenuLink>
+            <MenuButton>Account</MenuButton>
           </div>
         </li>
         <li>
           <div>
-            <MenuLink href="/">Favorites</MenuLink>
+            <MenuButton>Favorites</MenuButton>
           </div>
         </li>
         <li>
           <div>
-            <MenuLink href="/">Log out</MenuLink>
+            <MenuButton onClick={handleLogOut}>Log out</MenuButton>
           </div>
         </li>
       </ul>
