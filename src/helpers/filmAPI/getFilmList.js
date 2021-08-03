@@ -11,7 +11,9 @@ export const getGenreListUrl = () =>
 export const getPopularListUrl = (page) =>
   `${BASE_URL()}${popularList()}${AUTH(API_KEY())}&language=en-US&page=${page}`;
 // get by genre
-export const getMoviesByGenreUrl = (genreId) =>
-  `${BASE_URL()}${DISCOVER_MOVIES()}${AUTH(API_KEY())}${BY_GENRES(genreId)}`;
+export const getMoviesByGenreUrl = (genreId, page) =>
+  `${BASE_URL()}${DISCOVER_MOVIES()}${AUTH(API_KEY())}${BY_GENRES(
+    genreId
+  )}&page=${page}`;
 
   

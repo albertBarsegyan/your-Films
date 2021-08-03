@@ -34,7 +34,7 @@ export default function GenreContainer({ onClick }) {
           <ul className="flex flex-col gap-1 w-1/2 md:w-full ">
             {genreList.map((genre) => {
               return (
-                <MenuButton onClick={(e) => onClick(genre.id)} key={genre.id}>
+                <MenuButton onClick={(e) => onClick(genre)} key={genre.id}>
                   {genre.name}
                 </MenuButton>
               );

@@ -10,7 +10,7 @@ import GenreContainer from '../components/filmBlock/genres/GenreContainer';
 import SearchContainer from '../components/search/SearchContainer';
 import MenuBlock from '../components/userMenu/MenuBlock';
 import isObjectEmpty from '../helpers/isObjectEmpty';
-import { getPopularList } from '../services/genreService';
+import { getMoviesByGenre, getPopularList } from '../services/genreService';
 
 export default function User() {
   const router = useRouter();
@@ -18,6 +18,7 @@ export default function User() {
     filmList: [],
     page: 1,
   });
+  const [genreName, setGenreName] = useState({});
   let loggedUser = {};
 
   if (process.browser) {
@@ -38,6 +39,7 @@ export default function User() {
       });
     });
   }, []);
+
   useEffect(() => {
     getPopularList(filmData.page).then((res) => {
       setFilmData((prev) => {
@@ -48,6 +50,8 @@ export default function User() {
       });
     });
   }, [filmData.page]);
+
+  // load more button event
   const incrementPage = () => {
     setFilmData((prev) => {
       return {
@@ -56,7 +60,15 @@ export default function User() {
       };
     });
   };
-
+  const showMoviesByGenre = (genreObject) => {
+    getMoviesByGenre(genreObject.id, 1).then((response) => {
+      setFilmData({
+        page: 1,
+        filmList: response,
+      });
+    });
+    setGenreName({ ...genreObject });
+  };
   return (
     <div className="relative">
       <Head>
@@ -67,8 +79,14 @@ export default function User() {
       </Header>
       <SearchContainer />
       <div className="flex flex-col md:flex-row">
-        <GenreContainer />
-        <FilmList filmList={filmData.filmList} onClick={incrementPage} />
+        <GenreContainer
+          onClick={(genreObject) => showMoviesByGenre(genreObject)}
+        />
+        <FilmList
+          genre={genreName && genreName.name}
+          filmList={filmData.filmList}
+          onClick={incrementPage}
+        />
       </div>
     </div>
   );

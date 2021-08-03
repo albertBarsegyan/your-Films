@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   getGenreListUrl,
+  getMoviesByGenreUrl,
   getPopularListUrl,
 } from '../helpers/filmAPI/getFilmList';
 
@@ -15,3 +16,9 @@ export const getPopularList = async (page) => {
   const { results } = response.data;
   return results || [];
 };
+export const getMoviesByGenre = async (id) => {
+  const response = await axios.get(getMoviesByGenreUrl(id));
+  const { results } = response.data;
+  return results || [];
+};
+
