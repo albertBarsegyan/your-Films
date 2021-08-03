@@ -16,7 +16,6 @@ export default function User() {
   const router = useRouter();
   const [filmData, setFilmData] = useState({
     filmList: [],
-    favorites: [],
     page: 1,
   });
   const [genre, setGenre] = useState({ id: 16, name: 'Animation' });

@@ -5,9 +5,9 @@ import { useState, useEffect } from 'react';
 import { getGenreList } from '../../../services/genreService';
 import getGenreNameById from '../../../helpers/filmAPI/getGenreNameById';
 import classNames from 'classnames';
-
-export default function FilmBlock({ filmObject }) {
-  const [genreList, setGenreList] = useState('');
+import PropTypes from 'prop-types';
+export default function FilmBlock({ filmObject, makeFavorite }) {
+  const [genres, setGenres] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
   const blockStyle = classNames({
     'max-w-md w-full shadow-lg rounded-xl p-6 duration-300': true,
@@ -15,14 +15,39 @@ export default function FilmBlock({ filmObject }) {
     'bg-green-500': isFavorite,
   });
   useEffect(() => {
+    setIsFavorite(makeFavorite);
     getGenreList().then((response) => {
       const { genre_ids } = filmObject;
       const genreNames = getGenreNameById(genre_ids, response);
-      setGenreList(genreNames);
+      setGenres(genreNames);
     });
   }, []);
+
+  const addToFavoriteList = () => {
+    setIsFavorite((prev) => !prev);
+    if (process.browser) {
+      if (localStorage.getItem('favoriteList')) {
+        const pushValue = [
+          ...JSON.parse(localStorage.getItem('favoriteList')),
+          filmObject,
+        ];
+
+        const filterValue = JSON.parse(
+          localStorage.getItem('favoriteList')
+        ).filter((favoriteObject) => favoriteObject.id !== filmObject.id);
+        JSON.parse(localStorage.getItem('favoriteList')).find(
+          (favoriteObject) => favoriteObject.id === filmObject.id
+        )
+          ? localStorage.setItem('favoriteList', JSON.stringify(filterValue))
+          : localStorage.setItem('favoriteList', JSON.stringify(pushValue));
+        return;
+      }
+      localStorage.setItem('favoriteList', JSON.stringify([filmObject]));
+    }
+  };
+
   return (
-    <div className="relative flex flex-col items-center justify-center ">
+    <div className="w-1/4">
       <div className="container">
         <div className={blockStyle}>
           <div className="flex flex-col ">
@@ -79,7 +104,7 @@ export default function FilmBlock({ filmObject }) {
                       {filmObject.vote_average}
                     </span>
                     {/* film [genre_ids] */}
-                    <span className="mr-2 text-secondary">{genreList}</span>
+                    <span className="mr-2 text-secondary">{genres}</span>
                   </div>
                   {/* film [release_date] */}
                   <div>
@@ -98,7 +123,7 @@ export default function FilmBlock({ filmObject }) {
 
                 <div className="flex space-x-2 text-sm font-medium justify-start">
                   <button
-                    onClick={() => setIsFavorite((prev) => !prev)}
+                    onClick={addToFavoriteList}
                     className="transition ease-in duration-300 inline-flex items-center text-sm font-medium mb-2 md:mb-0 bg-purple-500 px-5 py-2 hover:shadow-lg  text-secondary rounded-full hover:bg-purple-600 "
                   >
                     <span> Favorites</span>
@@ -112,3 +137,9 @@ export default function FilmBlock({ filmObject }) {
     </div>
   );
 }
+FilmBlock.propTypes = {
+  makeFavorite: PropTypes.bool,
+};
+FilmBlock.defaultProps = {
+  makeFavorite: false,
+};
