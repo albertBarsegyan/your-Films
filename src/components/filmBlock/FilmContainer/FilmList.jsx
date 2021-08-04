@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import FilmBlock from './FilmBlock';
 import { array } from 'prop-types';
 import PrimaryButton from '../../buttons/PrimaryButton';
-import filterFavoritesFromFilmList from '../../../helpers/filterFavoritesFromFilmList';
 
 export default function FilmList({ filmList, onClick, genre }) {
   let localFavoriteList = [];

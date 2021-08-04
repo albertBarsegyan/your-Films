@@ -9,7 +9,11 @@ import FilmList from '../components/filmBlock/FilmContainer/FilmList';
 import SearchContainer from '../components/search/SearchContainer';
 import MenuBlock from '../components/userMenu/MenuBlock';
 import isObjectEmpty from '../helpers/isObjectEmpty';
-import { getMoviesByGenre, getSearchedFilms } from '../services/genreService';
+import {
+  getMoviesByGenre,
+  getSearchedFilms,
+  getPopularList,
+} from '../services/genreService';
 
 export default function User() {
   const router = useRouter();
@@ -17,7 +21,8 @@ export default function User() {
     filmList: [],
     page: 1,
   });
-  const [genre, setGenre] = useState({ id: 18, name: 'Search Film' });
+  const [searchInput, setSearchInput] = useState('');
+  const genre = { id: 18, name: 'Search Film' };
 
   let loggedUser;
   if (process.browser) {
@@ -29,13 +34,8 @@ export default function User() {
       router.push('/404');
       return;
     }
-    getMoviesByGenre(genre.id, 1).then((res) => {
-      setFilmData((prev) => {
-        return {
-          ...prev,
-          filmList: res,
-        };
-      });
+    getPopularList(1).then((data) => {
+      setFilmData({ filmList: data, page: 1 });
     });
     return () => {
       setFilmData({ filmList: [], page: 1 });
@@ -55,11 +55,11 @@ export default function User() {
         return true;
       })
       .then(() => {
-        getMoviesByGenre(genre.id, filmData.page).then((res) => {
+        getSearchedFilms(searchInput, filmData.page).then((data) => {
           setFilmData((prev) => {
             return {
-              ...prev,
-              filmList: [...prev.filmList, ...res],
+              filmList: [...prev.filmList, ...data],
+              page: prev.page + 1,
             };
           });
         });
@@ -81,7 +81,12 @@ export default function User() {
       <Header>
         <MenuBlock />
       </Header>
-      <SearchContainer onChange={handleSearch} />
+      <SearchContainer
+        onChange={(inputValue, page) => {
+          handleSearch(inputValue, page);
+          setSearchInput(inputValue);
+        }}
+      />
       <div className="flex flex-col md:flex-row">
         <FilmList
           genre={genre && genre.name}

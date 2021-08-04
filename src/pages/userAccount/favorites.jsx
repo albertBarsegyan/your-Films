@@ -31,7 +31,9 @@ export default function Favorites() {
       <div className="flex flex-col md:flex-row flex-wrap gap-5 mx-5 justify-center my-5">
         {localFavoriteList.favoriteList &&
           localFavoriteList.favoriteList.map((favorite) => {
-            return <FilmBlock key={favorite.id} filmObject={favorite} />;
+            return (
+              <FilmBlock makeFavorite key={favorite.id} filmObject={favorite} />
+            );
           })}
       </div>
 
