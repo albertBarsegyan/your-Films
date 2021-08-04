@@ -12,9 +12,11 @@ export default function Favorites() {
   if (process.browser) {
     localUser = JSON.parse(localStorage.getItem('loggedUser'));
     localFavoriteList =
-      JSON.parse(localStorage.getItem('favoriteList')).find(
-        (favoriteObject) => favoriteObject.email === localUser.email
-      ) || {};
+      (localStorage.getItem('favoriteList') &&
+        JSON.parse(localStorage.getItem('favoriteList')).find(
+          (favoriteObject) => favoriteObject.email === localUser.email
+        )) ||
+      {};
   }
   return (
     <div className="relative">
