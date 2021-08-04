@@ -16,8 +16,8 @@ export const getMoviesByGenreUrl = (genreId, page) =>
     genreId
   )}&page=${page}`;
 
-export const searchFilmsUrl = (query, page) =>
-  `${BASE_URL()}${search()}${AUTH(
+export const searchFilmsUrl = (query, page) => {
+  return `${BASE_URL()}${search()}${AUTH(
     API_KEY()
-  )}&language=en-US&page=${page}&include_adult=false&query=${encodeURI(query)}`;
-
+  )}&language=en-US&page=${page}&include_adult=false&query=${query}`;
+};

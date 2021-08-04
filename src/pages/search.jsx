@@ -66,35 +66,41 @@ export default function User() {
       });
   };
 
-  const handleSearch = (query, page) => {
-    if (query.length > 0) {
-      getSearchedFilms(query, page).then((data) =>
-        setFilmData({ filmList: data, page: 1 })
-      );
-    }
-  };
-  return (
-    <div className="relative">
-      <Head>
-        <title>Search Film </title>
-      </Head>
-      <Header>
-        <MenuBlock />
-      </Header>
-      <SearchContainer
-        onChange={(inputValue, page) => {
-          handleSearch(inputValue, page);
-          setSearchInput(inputValue);
-        }}
-      />
-      <div className="flex flex-col md:flex-row">
-        <FilmList
-          genre={genre && genre.name}
-          filmList={filmData.filmList}
-          onClick={incrementPage}
+    const handleSearch = (query, page) => {
+      if (query.length > 0) {
+        getSearchedFilms(query, page).then((data) =>
+          setFilmData({ filmList: data, page: 1 })
+        );
+      }
+    };
+    return (
+      <div className="relative">
+        <Head>
+          <title>Search Film </title>
+        </Head>
+        <Header>
+          <MenuBlock />
+        </Header>
+        <SearchContainer
+          onChange={(inputValue, page) => {
+            handleSearch(inputValue, page);
+            setSearchInput(inputValue);
+          }}
         />
+        <div className="flex flex-col md:flex-row">
+          {filmData.filmList.length > 0 ? (
+            <FilmList
+              genre={genre && genre.name}
+              filmList={filmData.filmList}
+              onClick={incrementPage}
+            />
+          ) : (
+            <div className="flex w-full text-center justify-center items-center">
+              <p className="text-primary text-4xl">There isn`t any results</p>
+            </div>
+          )}
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
-  );
+    );
 }

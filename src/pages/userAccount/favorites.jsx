@@ -7,13 +7,14 @@ import SearchContainer from '../../components/search/SearchContainer';
 import MenuBlock from '../../components/userMenu/MenuBlock';
 
 export default function Favorites() {
-  let localFavoriteList = {};
+  let localFavoriteList;
   let localUser;
   if (process.browser) {
     localUser = JSON.parse(localStorage.getItem('loggedUser'));
-    localFavoriteList = JSON.parse(localStorage.getItem('favoriteList')).find(
-      (favoriteObject) => favoriteObject.email === localUser.email
-    );
+    localFavoriteList =
+      JSON.parse(localStorage.getItem('favoriteList')).find(
+        (favoriteObject) => favoriteObject.email === localUser.email
+      ) || {};
   }
   return (
     <div className="relative">
@@ -29,7 +30,7 @@ export default function Favorites() {
         </h3>
       </div>
       <div className="flex flex-col md:flex-row flex-wrap gap-5 mx-5 justify-center my-5">
-        {localFavoriteList.favoriteList &&
+        {localFavoriteList &&
           localFavoriteList.favoriteList.map((favorite) => {
             return (
               <FilmBlock makeFavorite key={favorite.id} filmObject={favorite} />
