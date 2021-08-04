@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import MenuButton from '../buttons/MenuButton';
+import MenuLink from '../buttons/MenuLink';
 
 export default function MenuToggle() {
   const router = useRouter();
@@ -16,12 +17,16 @@ export default function MenuToggle() {
       <ul className="flex flex-col w-full">
         <li>
           <div>
-            <MenuButton>Account</MenuButton>
+            <MenuLink href="/account" passHref>
+              Account
+            </MenuLink>
           </div>
         </li>
         <li>
           <div>
-            <MenuButton>Favorites</MenuButton>
+            <MenuLink href="/favorites" passHref>
+              Favorites
+            </MenuLink>
           </div>
         </li>
         <li>

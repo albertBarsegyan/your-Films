@@ -10,7 +10,7 @@ import GenreContainer from '../components/filmBlock/genres/GenreContainer';
 import SearchContainer from '../components/search/SearchContainer';
 import MenuBlock from '../components/userMenu/MenuBlock';
 import isObjectEmpty from '../helpers/isObjectEmpty';
-import { getMoviesByGenre, getPopularList } from '../services/genreService';
+import { getMoviesByGenre } from '../services/genreService';
 
 export default function User() {
   const router = useRouter();

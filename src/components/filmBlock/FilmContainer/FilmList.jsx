@@ -3,13 +3,14 @@ import { useEffect } from 'react';
 import FilmBlock from './FilmBlock';
 import { array } from 'prop-types';
 import PrimaryButton from '../../buttons/PrimaryButton';
+import filterFavoritesFromFilmList from '../../../helpers/filterFavoritesFromFilmList';
+
 export default function FilmList({ filmList, onClick, genre }) {
-  let localFavoriteList;
+  let localFavoriteList = [];
   if (process.browser) {
-    localFavoriteList =
-      localStorage.getItem('favoriteList') &&
-      JSON.parse(localStorage.getItem('favoriteList'));
-    console.log(localFavoriteList);
+    localFavoriteList = localStorage.getItem('favoriteList')
+      ? JSON.parse(localStorage.getItem('favoriteList'))
+      : [];
   }
 
   return (
@@ -20,15 +21,8 @@ export default function FilmList({ filmList, onClick, genre }) {
         </h3>
       </div>
       <div className="flex flex-col md:flex-row flex-wrap gap-5 mx-5 justify-center my-5">
-        {filmList.map((film, index) => {
-          localFavoriteList.forEach((favorite) => {
-            if (favorite.id === film.id) {
-              console.log(favorite, 'favorite');
-              return <FilmBlock makeFavorite key={index} filmObject={film} />;
-            }
-            return;
-          });
-          return <FilmBlock key={index} filmObject={film} />;
+        {filmList.map((film) => {
+          return <FilmBlock key={film.id} filmObject={film} />;
         })}
       </div>
       <div className="flex items-center justify-center">
