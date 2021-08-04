@@ -1,13 +1,17 @@
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import LinkButton from '../buttons/LinkButton';
-import PrimaryButton from '../buttons/PrimaryButton';
 
 export default function Header({ children }) {
+  const router = useRouter();
+
+  const hrefValue =
+    router.pathname === '/' || router.pathname === '/login' ? '/' : '/user';
   return (
     <div className="flex items-center justify-center py-4 flex-col md:flex-row">
       <div className="flex flex-row items-center justify-center gap">
         <div>
-          <LinkButton href="/user" passHref>
+          <LinkButton href={hrefValue} passHref>
             Your-Films
           </LinkButton>
         </div>
