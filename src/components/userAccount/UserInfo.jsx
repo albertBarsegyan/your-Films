@@ -5,6 +5,7 @@ export default function UserInfo() {
   if (process.browser) {
     localUser = JSON.parse(localStorage.getItem('loggedUser'));
   }
+  console.log(localUser);
   return (
     <div className="container">
       <div className="mt-5">

@@ -20,7 +20,7 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
   if (process.browser) {
     loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
   }
-  
+
   useEffect(() => {
     setIsFavorite(makeFavorite);
     getGenreList().then((response) => {

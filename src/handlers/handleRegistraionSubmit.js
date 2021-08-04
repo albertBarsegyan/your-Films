@@ -13,7 +13,8 @@ export const handleRegistrationSubmit = (formData, stateHook, messageHook) => {
       })
       .then((data) => {
         stateHook(() => data);
-        localStorage.setItem('loggedUser', JSON.stringify(data));
+
+        localStorage.setItem('loggedUser', JSON.stringify(data[0]));
       });
     return true;
   }
@@ -32,7 +33,8 @@ export const handleRegistrationSubmit = (formData, stateHook, messageHook) => {
     })
     .then((data) => {
       stateHook(() => [...data]);
-      localStorage.setItem('loggedUser', JSON.stringify(data));
+
+      localStorage.setItem('loggedUser', JSON.stringify(data[0]));
     });
   return true;
 };

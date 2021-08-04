@@ -17,6 +17,7 @@ export default function Favorites() {
         )
       : undefined;
   }
+
   return (
     <div className="relative">
       <Head>
