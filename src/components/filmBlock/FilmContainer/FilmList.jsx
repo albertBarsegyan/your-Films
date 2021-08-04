@@ -9,7 +9,9 @@ export default function FilmList({ filmList, onClick, genre }) {
     localFavoriteList =
       localStorage.getItem('favoriteList') &&
       JSON.parse(localStorage.getItem('favoriteList'));
+    console.log(localFavoriteList);
   }
+
   return (
     <div className="my-5">
       <div className="flex items-center justify-center mb-4">
@@ -19,6 +21,13 @@ export default function FilmList({ filmList, onClick, genre }) {
       </div>
       <div className="flex flex-col md:flex-row flex-wrap gap-5 mx-5 justify-center my-5">
         {filmList.map((film, index) => {
+          localFavoriteList.forEach((favorite) => {
+            if (favorite.id === film.id) {
+              console.log(favorite, 'favorite');
+              return <FilmBlock makeFavorite key={index} filmObject={film} />;
+            }
+            return;
+          });
           return <FilmBlock key={index} filmObject={film} />;
         })}
       </div>
