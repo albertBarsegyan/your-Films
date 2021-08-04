@@ -1,5 +1,5 @@
 import { API_KEY, AUTH, BASE_URL } from './APIAuth';
-import { popularList } from './filmTypesUrls';
+import { popularList, search } from './filmTypesUrls';
 
 export const DISCOVER_MOVIES = () => '/discover/movie';
 // get films by genre id
@@ -16,4 +16,8 @@ export const getMoviesByGenreUrl = (genreId, page) =>
     genreId
   )}&page=${page}`;
 
-  
+export const searchFilmsUrl = (query, page) =>
+  `${BASE_URL()}${search()}${AUTH(
+    API_KEY()
+  )}&language=en-US&page=${page}&include_adult=false&query=${encodeURI(query)}`;
+

@@ -6,7 +6,6 @@ import { useEffect, useReducer } from 'react';
 import Footer from '../components/atoms/Footer';
 import Header from '../components/atoms/Header';
 import FilmList from '../components/filmBlock/FilmContainer/FilmList';
-import GenreContainer from '../components/filmBlock/genres/GenreContainer';
 import SearchContainer from '../components/search/SearchContainer';
 import MenuBlock from '../components/userMenu/MenuBlock';
 import isObjectEmpty from '../helpers/isObjectEmpty';
@@ -18,7 +17,7 @@ export default function User() {
     filmList: [],
     page: 1,
   });
-  const [genre, setGenre] = useState({ id: 16, name: 'Animation' });
+  const [genre, setGenre] = useState({ id: 18, name: 'Search Film' });
 
   let loggedUser;
   if (process.browser) {
@@ -38,6 +37,9 @@ export default function User() {
         };
       });
     });
+    return () => {
+      setFilmData({ filmList: [], page: 1 });
+    };
   }, []);
 
   // load more button event
@@ -63,28 +65,24 @@ export default function User() {
         });
       });
   };
-  const showMoviesByGenre = (genreObject) => {
-    getMoviesByGenre(genreObject.id, 1).then((response) => {
-      setFilmData({
-        page: 1,
-        filmList: response,
-      });
-    });
-    setGenre(genreObject);
-  };
 
+  const handleSearch = (query, page) => {
+    if (query.length > 0) {
+      getSearchedFilms(query, page).then((data) =>
+        setFilmData({ filmList: data, page: 1 })
+      );
+    }
+  };
   return (
     <div className="relative">
       <Head>
-        <title>Personal Blog </title>
+        <title>Search Film </title>
       </Head>
       <Header>
         <MenuBlock />
       </Header>
+      <SearchContainer onChange={handleSearch} />
       <div className="flex flex-col md:flex-row">
-        <GenreContainer
-          onClick={(genreObject) => showMoviesByGenre(genreObject)}
-        />
         <FilmList
           genre={genre && genre.name}
           filmList={filmData.filmList}

@@ -3,6 +3,7 @@ import {
   getGenreListUrl,
   getMoviesByGenreUrl,
   getPopularListUrl,
+  searchFilmsUrl,
 } from '../helpers/filmAPI/getFilmList';
 
 export const getGenreList = async () => {
@@ -18,6 +19,11 @@ export const getPopularList = async (page) => {
 };
 export const getMoviesByGenre = async (id, page) => {
   const response = await axios.get(getMoviesByGenreUrl(id, page));
+  const { results } = response.data;
+  return results || [];
+};
+export const getSearchedFilms = async (query, page) => {
+  const response = await axios.get(searchFilmsUrl(encodeURI(query), page));
   const { results } = response.data;
   return results || [];
 };
