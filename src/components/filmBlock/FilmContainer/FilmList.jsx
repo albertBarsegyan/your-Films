@@ -5,12 +5,15 @@ import { array } from 'prop-types';
 import PrimaryButton from '../../buttons/PrimaryButton';
 
 export default function FilmList({ filmList, onClick, genre }) {
-  let localFavoriteList = [];
-  if (process.browser) {
-    localFavoriteList = localStorage.getItem('favoriteList')
-      ? JSON.parse(localStorage.getItem('favoriteList'))
-      : [];
-  }
+  // let localFavoriteList = [];
+  // const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+  // if (process.browser) {
+  //   localFavoriteList = localStorage.getItem('favoriteList')
+  //     ? JSON.parse(localStorage.getItem('favoriteList')).find(
+  //         (favoriteObject) => favoriteObject.email === loggedUser.email
+  //       )
+  //     : [];
+  // }
 
   return (
     <div className="my-5">
