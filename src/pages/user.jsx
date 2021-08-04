@@ -20,9 +20,9 @@ export default function User() {
   });
   const [genre, setGenre] = useState({ id: 16, name: 'Animation' });
 
-  let loggedUser = {};
+  let loggedUser;
   if (process.browser) {
-    loggedUser = JSON.parse(localStorage.getItem('loggedUser')) ?? {};
+    loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
   }
 
   useEffect(() => {

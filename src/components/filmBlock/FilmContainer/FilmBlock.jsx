@@ -6,6 +6,8 @@ import { getGenreList } from '../../../services/genreService';
 import getGenreNameById from '../../../helpers/filmAPI/getGenreNameById';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { Favorite } from '@material-ui/icons';
+
 export default function FilmBlock({ filmObject, makeFavorite }) {
   const [genres, setGenres] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
@@ -14,6 +16,10 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
     'bg-primary ': !isFavorite,
     'bg-green-500': isFavorite,
   });
+  let loggedUser;
+  if (process.browser) {
+    loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+  }
   useEffect(() => {
     setIsFavorite(makeFavorite);
     getGenreList().then((response) => {
@@ -25,27 +31,82 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
 
   const addToFavoriteList = () => {
     setIsFavorite((prev) => !prev);
+    // browser render time
     if (process.browser) {
       if (localStorage.getItem('favoriteList')) {
-        const pushValue = [
-          ...JSON.parse(localStorage.getItem('favoriteList')),
-          filmObject,
-        ];
+        // if user has in local storage
+        if (
+          JSON.parse(localStorage.getItem('favoriteList')).find(
+            (favoriteObject) => favoriteObject.email === loggedUser.email
+          )
+        ) {
+          // add to favoriteList
+          const addLocalFavorites = JSON.parse(
+            localStorage.getItem('favoriteList')
+          ).map((favoriteObject) => {
+            if (favoriteObject.email === loggedUser.email) {
+              const editedObject = JSON.parse(
+                localStorage.getItem('favoriteList')
+              ).find(
+                (favoriteObject) => favoriteObject.email === loggedUser.email
+              );
+              editedObject.favoriteList = [
+                ...editedObject.favoriteList,
+                filmObject,
+              ];
+              return editedObject;
+            }
+            return favoriteObject;
+          });
 
-        const filterValue = JSON.parse(
-          localStorage.getItem('favoriteList')
-        ).filter((favoriteObject) => favoriteObject.id !== filmObject.id);
-        JSON.parse(localStorage.getItem('favoriteList')).find(
-          (favoriteObject) => favoriteObject.id === filmObject.id
-        )
-          ? localStorage.setItem('favoriteList', JSON.stringify(filterValue))
-          : localStorage.setItem('favoriteList', JSON.stringify(pushValue));
+          const filterLocalFavorites = JSON.parse(
+            localStorage.getItem('favoriteList')
+          ).map((favoriteObject) => {
+            if (favoriteObject.email === loggedUser.email) {
+              const editedObject = JSON.parse(
+                localStorage.getItem('favoriteList')
+              ).find(
+                (favoriteObject) => favoriteObject.email === loggedUser.email
+              );
+              editedObject.favoriteList = editedObject.favoriteList.filter(
+                (favoriteObject) => favoriteObject.id !== filmObject.id
+              );
+              return editedObject;
+            }
+            return favoriteObject;
+          });
+
+          JSON.parse(localStorage.getItem('favoriteList')).find(
+            (favoriteObject) => {
+              if (favoriteObject.email === loggedUser.email) {
+                favoriteObject.favoriteList.find(
+                  (favorite) => favorite.id === filmObject.id
+                ) && true;
+              }
+            }
+          )
+            ? localStorage.setItem(
+                'favoriteList',
+                JSON.stringify(filterLocalFavorites)
+              )
+            : localStorage.setItem(
+                'favoriteList',
+                JSON.stringify(addLocalFavorites)
+              );
+          localStorage.setItem('favoriteList', JSON.stringify([filmObject]));
+        }
+
         return;
       }
-      localStorage.setItem('favoriteList', JSON.stringify([filmObject]));
+
+      localStorage.setItem(
+        'favoriteList',
+        JSON.stringify([
+          { email: loggedUser.email, favoriteList: [filmObject] },
+        ])
+      );
     }
   };
-
   return (
     <div className="w-1/4">
       <div className="container">
@@ -137,9 +198,11 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
     </div>
   );
 }
+
 FilmBlock.propTypes = {
   makeFavorite: PropTypes.bool,
 };
 FilmBlock.defaultProps = {
   makeFavorite: false,
 };
+
