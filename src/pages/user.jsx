@@ -38,7 +38,7 @@ export default function User() {
         };
       });
     });
-  }, []);
+  }, [genre.id]);
 
   // load more button event
   const incrementPage = () => {
