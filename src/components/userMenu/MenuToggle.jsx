@@ -24,7 +24,7 @@ export default function MenuToggle() {
         </li>
         <li>
           <div>
-            <MenuLink href="/favorites" passHref>
+            <MenuLink href="/[id]" passHref>
               Favorites
             </MenuLink>
           </div>

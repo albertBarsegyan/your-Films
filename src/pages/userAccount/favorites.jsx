@@ -1,22 +1,20 @@
 import Head from 'next/head';
-import Footer from '../components/atoms/Footer';
-import Header from '../components/atoms/Header';
-import FilmBlock from '../components/filmBlock/FilmContainer/FilmBlock';
-import GenreContainer from '../components/filmBlock/genres/GenreContainer';
-import SearchContainer from '../components/search/SearchContainer';
-import MenuBlock from '../components/userMenu/MenuBlock';
+import Footer from '../../components/atoms/Footer';
+import Header from '../../components/atoms/Header';
+import FilmBlock from '../../components/filmBlock/FilmContainer/FilmBlock';
+import GenreContainer from '../../components/filmBlock/genres/GenreContainer';
+import SearchContainer from '../../components/search/SearchContainer';
+import MenuBlock from '../../components/userMenu/MenuBlock';
 
 export default function Favorites() {
     let localFavoriteList = {};
     let localUser;
     if (process.browser) {
-      localUser = JSON.stringify(
-        localStorage.getItem('loggedUser')
-      ).localFavoriteList = localStorage.getItem('favoriteList')
-        ? JSON.parse(localStorage.getItem('favoriteList')).find(
-            (favoriteObject) => favoriteObject.email === localUser.email
-          )
-        : {};
+        localUser = JSON.parse(localStorage.getItem('loggedUser'));
+        localFavoriteList = JSON.parse(
+          localStorage.getItem('favoriteList')
+        ).find((favoriteObject) => favoriteObject.email === localUser.email);
+        
     }
     return (
       <div className="relative">

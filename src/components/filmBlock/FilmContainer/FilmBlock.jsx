@@ -33,8 +33,11 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
     setIsFavorite((prev) => !prev);
     // browser render time
     if (process.browser) {
+      // if favoriteList exist in
+
       if (localStorage.getItem('favoriteList')) {
         // if user has in local storage
+
         if (
           JSON.parse(localStorage.getItem('favoriteList')).find(
             (favoriteObject) => favoriteObject.email === loggedUser.email
@@ -45,46 +48,32 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
             localStorage.getItem('favoriteList')
           ).map((favoriteObject) => {
             if (favoriteObject.email === loggedUser.email) {
-              const editedObject = JSON.parse(
-                localStorage.getItem('favoriteList')
-              ).find(
-                (favoriteObject) => favoriteObject.email === loggedUser.email
-              );
-              editedObject.favoriteList = [
-                ...editedObject.favoriteList,
-                filmObject,
-              ];
-              return editedObject;
+              let changedObject = { ...favoriteObject };
+              changedObject.favoriteList.push(filmObject);
+              return changedObject;
             }
             return favoriteObject;
           });
 
+          console.log(addLocalFavorites, 'local favoriteList');
           const filterLocalFavorites = JSON.parse(
             localStorage.getItem('favoriteList')
           ).map((favoriteObject) => {
             if (favoriteObject.email === loggedUser.email) {
-              const editedObject = JSON.parse(
-                localStorage.getItem('favoriteList')
-              ).find(
-                (favoriteObject) => favoriteObject.email === loggedUser.email
-              );
-              editedObject.favoriteList = editedObject.favoriteList.filter(
+              let changedObject = { ...favoriteObject };
+              changedObject.favoriteList = changedObject.favoriteList.filter(
                 (favoriteObject) => favoriteObject.id !== filmObject.id
               );
-              return editedObject;
+              return changedObject;
             }
             return favoriteObject;
           });
 
-          JSON.parse(localStorage.getItem('favoriteList')).find(
-            (favoriteObject) => {
-              if (favoriteObject.email === loggedUser.email) {
-                favoriteObject.favoriteList.find(
-                  (favorite) => favorite.id === filmObject.id
-                ) && true;
-              }
-            }
-          )
+          JSON.parse(localStorage.getItem('favoriteList'))
+            .find((favoriteObject) => favoriteObject.email === loggedUser.email)
+            .favoriteList.find(
+              (favoriteObject) => favoriteObject.id === filmObject.id
+            )
             ? localStorage.setItem(
                 'favoriteList',
                 JSON.stringify(filterLocalFavorites)
@@ -93,12 +82,10 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
                 'favoriteList',
                 JSON.stringify(addLocalFavorites)
               );
-          localStorage.setItem('favoriteList', JSON.stringify([filmObject]));
         }
-
         return;
       }
-
+      // if there is favoriteList in local storage create
       localStorage.setItem(
         'favoriteList',
         JSON.stringify([
@@ -199,9 +186,6 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
   );
 }
 
-FilmBlock.propTypes = {
-  makeFavorite: PropTypes.bool,
-};
 FilmBlock.defaultProps = {
   makeFavorite: false,
 };
