@@ -34,8 +34,7 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
     setIsFavorite((prev) => !prev);
     // browser render time
     if (process.browser) {
-      // if favoriteList exist in
-
+      // if favoriteList exist in local storage
       if (localStorage.getItem('favoriteList')) {
         // if user has in local storage
 
@@ -56,7 +55,7 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
             return favoriteObject;
           });
 
-          console.log(addLocalFavorites, 'local favoriteList');
+        
           const filterLocalFavorites = JSON.parse(
             localStorage.getItem('favoriteList')
           ).map((favoriteObject) => {
@@ -86,8 +85,7 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
         }
         return;
       }
-      // if there is favoriteList in local storage create
-
+      // if there isn't favoriteList in local storage , creating new one
       localStorage.setItem(
         'favoriteList',
         JSON.stringify([
