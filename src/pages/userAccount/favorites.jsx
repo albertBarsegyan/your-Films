@@ -1,22 +1,16 @@
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 import Footer from '../../components/atoms/Footer';
 import Header from '../../components/atoms/Header';
 import FilmBlock from '../../components/filmBlock/FilmContainer/FilmBlock';
-import GenreContainer from '../../components/filmBlock/genres/GenreContainer';
-import SearchContainer from '../../components/search/SearchContainer';
 import MenuBlock from '../../components/userMenu/MenuBlock';
-
+import LOGGED_USER_FAVORITE_OBJECT from '../../constants/userFavoriteList';
+import { handleFavoriteButtonEvent } from '../../handlers/handleFavoriteButtonEvent';
 export default function Favorites() {
-  let localFavoriteObject;
-  let localUser;
-  if (process.browser) {
-    localUser = JSON.parse(localStorage.getItem('loggedUser'));
-    localFavoriteObject = localStorage.getItem('favoriteList')
-      ? JSON.parse(localStorage.getItem('favoriteList')).find(
-          (favoriteObject) => favoriteObject.email === localUser.email
-        )
-      : undefined;
-  }
+  const [userFavoriteList, setUserFavoriteList] = useState(
+    LOGGED_USER_FAVORITE_OBJECT && LOGGED_USER_FAVORITE_OBJECT.favoriteList
+  );
+  console.log(LOGGED_USER_FAVORITE_OBJECT);
 
   return (
     <div className="relative">
@@ -32,10 +26,17 @@ export default function Favorites() {
         </h3>
       </div>
       <div className="flex flex-col md:flex-row flex-wrap gap-5 mx-5 justify-center my-5">
-        {localFavoriteObject && localFavoriteObject.favoriteList.length > 0 ? (
-          localFavoriteObject.favoriteList.map((favorite) => {
+        {userFavoriteList && userFavoriteList.length > 0 ? (
+          userFavoriteList.map((favorite) => {
             return (
-              <FilmBlock makeFavorite key={favorite.id} filmObject={favorite} />
+              <FilmBlock
+                onClick={() =>
+                  handleFavoriteButtonEvent(favorite, setUserFavoriteList)
+                }
+                makeFavorite
+                key={favorite.id}
+                filmObject={favorite}
+              />
             );
           })
         ) : (

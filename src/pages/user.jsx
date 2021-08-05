@@ -9,6 +9,8 @@ import FilmList from '../components/filmBlock/FilmContainer/FilmList';
 import GenreContainer from '../components/filmBlock/genres/GenreContainer';
 import SearchContainer from '../components/search/SearchContainer';
 import MenuBlock from '../components/userMenu/MenuBlock';
+import LOGGED_USER_FAVORITE_OBJECT from '../constants/userFavoriteList';
+import { handleFavoriteButtonEvent } from '../handlers/handleFavoriteButtonEvent';
 import isObjectEmpty from '../helpers/isObjectEmpty';
 import { getMoviesByGenre, getSearchedFilms } from '../services/genreService';
 
@@ -18,6 +20,9 @@ export default function User() {
     filmList: [],
     page: 1,
   });
+  const [favoriteList, setFavoriteList] = useState(
+    LOGGED_USER_FAVORITE_OBJECT && LOGGED_USER_FAVORITE_OBJECT.favoriteList
+  );
   const [genre, setGenre] = useState({ id: 16, name: 'Animation' });
 
   let loggedUser;
@@ -86,9 +91,12 @@ export default function User() {
           onClick={(genreObject) => showMoviesByGenre(genreObject)}
         />
         <FilmList
+          handleFavoriteEvent={(filmObject) =>
+            handleFavoriteButtonEvent(filmObject, setFavoriteList)
+          }
           genre={genre && genre.name}
           filmList={filmData.filmList}
-          onClick={incrementPage}
+          onClick={() => incrementPage()}
         />
       </div>
       <Footer />

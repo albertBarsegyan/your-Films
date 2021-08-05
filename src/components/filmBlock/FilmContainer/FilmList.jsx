@@ -4,7 +4,12 @@ import FilmBlock from './FilmBlock';
 import { array } from 'prop-types';
 import PrimaryButton from '../../buttons/PrimaryButton';
 
-export default function FilmList({ filmList, onClick, genre }) {
+export default function FilmList({
+  filmList,
+  onClick,
+  genre,
+  handleFavoriteEvent,
+}) {
   // let localFavoriteList = [];
   // const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
   // if (process.browser) {
@@ -24,7 +29,13 @@ export default function FilmList({ filmList, onClick, genre }) {
       </div>
       <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         {filmList.map((film) => {
-          return <FilmBlock key={film.id} filmObject={film} />;
+          return (
+            <FilmBlock
+              onClick={(film) => handleFavoriteEvent(film)}
+              key={film.id}
+              filmObject={film}
+            />
+          );
         })}
       </div>
       <div className="flex items-center justify-center">

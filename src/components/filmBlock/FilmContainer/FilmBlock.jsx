@@ -5,10 +5,9 @@ import { useState, useEffect } from 'react';
 import { getGenreList } from '../../../services/genreService';
 import getGenreNameById from '../../../helpers/filmAPI/getGenreNameById';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import { Favorite } from '@material-ui/icons';
+import { bool } from 'prop-types';
 
-export default function FilmBlock({ filmObject, makeFavorite }) {
+export default function FilmBlock({ filmObject, makeFavorite, onClick }) {
   const [genres, setGenres] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
   const blockStyle = classNames({
@@ -16,10 +15,6 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
     'bg-primary ': !isFavorite,
     'bg-green-500': isFavorite,
   });
-  let loggedUser;
-  if (process.browser) {
-    loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-  }
 
   useEffect(() => {
     setIsFavorite(makeFavorite);
@@ -30,70 +25,6 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
     });
   }, []);
 
-  const addToFavoriteList = () => {
-    setIsFavorite((prev) => !prev);
-    // browser render time
-    if (process.browser) {
-      // if favoriteList exist in local storage
-      if (localStorage.getItem('favoriteList')) {
-        // if user has in local storage
-
-        if (
-          JSON.parse(localStorage.getItem('favoriteList')).find(
-            (favoriteObject) => favoriteObject.email === loggedUser.email
-          )
-        ) {
-          // add to favoriteList
-          const addLocalFavorites = JSON.parse(
-            localStorage.getItem('favoriteList')
-          ).map((favoriteObject) => {
-            if (favoriteObject.email === loggedUser.email) {
-              let changedObject = { ...favoriteObject };
-              changedObject.favoriteList.push(filmObject);
-              return changedObject;
-            }
-            return favoriteObject;
-          });
-
-        
-          const filterLocalFavorites = JSON.parse(
-            localStorage.getItem('favoriteList')
-          ).map((favoriteObject) => {
-            if (favoriteObject.email === loggedUser.email) {
-              let changedObject = { ...favoriteObject };
-              changedObject.favoriteList = changedObject.favoriteList.filter(
-                (favoriteObject) => favoriteObject.id !== filmObject.id
-              );
-              return changedObject;
-            }
-            return favoriteObject;
-          });
-
-          JSON.parse(localStorage.getItem('favoriteList'))
-            .find((favoriteObject) => favoriteObject.email === loggedUser.email)
-            .favoriteList.find(
-              (favoriteObject) => favoriteObject.id === filmObject.id
-            )
-            ? localStorage.setItem(
-                'favoriteList',
-                JSON.stringify(filterLocalFavorites)
-              )
-            : localStorage.setItem(
-                'favoriteList',
-                JSON.stringify(addLocalFavorites)
-              );
-        }
-        return;
-      }
-      // if there isn't favoriteList in local storage , creating new one
-      localStorage.setItem(
-        'favoriteList',
-        JSON.stringify([
-          { email: loggedUser.email, favoriteList: [filmObject] },
-        ])
-      );
-    }
-  };
   return (
     <div className="flex items-center justify-center m-1">
       {/* <div className="container"> */}
@@ -171,7 +102,10 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
 
               <div className="flex space-x-2 text-sm font-medium justify-start">
                 <button
-                  onClick={addToFavoriteList}
+                  onClick={() => {
+                    onClick();
+                    setIsFavorite((prev) => !prev);
+                  }}
                   className="transition ease-in duration-300 inline-flex items-center text-sm font-medium mb-2 md:mb-0 bg-purple-500 px-5 py-2 hover:shadow-lg  text-secondary rounded-full hover:bg-purple-600 "
                 >
                   <span> Favorites</span>
@@ -185,6 +119,9 @@ export default function FilmBlock({ filmObject, makeFavorite }) {
     </div>
   );
 }
+FilmBlock.propTypes = {
+  makeFavorite: bool,
+};
 
 FilmBlock.defaultProps = {
   makeFavorite: false,
