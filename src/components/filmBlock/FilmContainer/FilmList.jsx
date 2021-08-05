@@ -16,13 +16,13 @@ export default function FilmList({ filmList, onClick, genre }) {
   // }
 
   return (
-    <div className="my-5">
+    <div className="my-5 w-4/5 md:w-3/4 mx-auto">
       <div className="flex items-center justify-center mb-4">
-        <h3 className="text-center text-3xl text-primary border-b border-primary w-1/6 py-2">
+        <h3 className="text-3xl text-center text-primary border-b border-primary md:w-1/6 py-2">
           {genre}
         </h3>
       </div>
-      <div className="flex flex-col md:flex-row flex-wrap gap-5 mx-5 justify-center my-5">
+      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         {filmList.map((film) => {
           return <FilmBlock key={film.id} filmObject={film} />;
         })}
