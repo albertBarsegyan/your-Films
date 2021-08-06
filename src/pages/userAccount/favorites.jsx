@@ -4,13 +4,27 @@ import Footer from '../../components/atoms/Footer';
 import Header from '../../components/atoms/Header';
 import FilmBlock from '../../components/filmBlock/FilmContainer/FilmBlock';
 import MenuBlock from '../../components/userMenu/MenuBlock';
-import LOGGED_USER_FAVORITE_OBJECT from '../../constants/userFavoriteList';
 import { handleFavoriteButtonEvent } from '../../handlers/handleFavoriteButtonEvent';
+import isObjectEmpty from '../../helpers/isObjectEmpty';
 export default function Favorites() {
-  const [userFavoriteList, setUserFavoriteList] = useState(
-    LOGGED_USER_FAVORITE_OBJECT && LOGGED_USER_FAVORITE_OBJECT.favoriteList
-  );
-  console.log(LOGGED_USER_FAVORITE_OBJECT);
+  const [userFavoriteList, setUserFavoriteList] = useState([]);
+  let loggedUser, loggedUserFavoriteObject;
+  if (process.browser) {
+    loggedUser = {} || JSON.parse(localStorage.getItem('loggedUser'));
+    loggedUserFavoriteObject = JSON.parse(
+      localStorage.getItem('favoriteList')
+    ).find((favoriteObject) => favoriteObject.email === loggedUser.email);
+  }
+
+  useEffect(() => {
+    setUserFavoriteList(
+      isObjectEmpty(loggedUserFavoriteObject) &&
+        loggedUserFavoriteObject.favoriteList
+    );
+    return () => {
+      setUserFavoriteList([]);
+    };
+  }, []);
 
   return (
     <div className="relative">

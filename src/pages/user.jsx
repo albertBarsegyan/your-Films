@@ -9,7 +9,6 @@ import FilmList from '../components/filmBlock/FilmContainer/FilmList';
 import GenreContainer from '../components/filmBlock/genres/GenreContainer';
 import SearchContainer from '../components/search/SearchContainer';
 import MenuBlock from '../components/userMenu/MenuBlock';
-import LOGGED_USER_FAVORITE_OBJECT from '../constants/userFavoriteList';
 import { handleFavoriteButtonEvent } from '../handlers/handleFavoriteButtonEvent';
 import isObjectEmpty from '../helpers/isObjectEmpty';
 import { getMoviesByGenre, getSearchedFilms } from '../services/genreService';
@@ -20,14 +19,15 @@ export default function User() {
     filmList: [],
     page: 1,
   });
-  const [favoriteList, setFavoriteList] = useState(
-    LOGGED_USER_FAVORITE_OBJECT && LOGGED_USER_FAVORITE_OBJECT.favoriteList
-  );
+  const [favoriteList, setFavoriteList] = useState([]);
   const [genre, setGenre] = useState({ id: 16, name: 'Animation' });
 
-  let loggedUser;
+  let loggedUser, loggedUserFavoriteObject;
   if (process.browser) {
     loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+    loggedUserFavoriteObject = JSON.parse(
+      localStorage.getItem('favoriteList')
+    ).find((favoriteObject) => favoriteObject.email === loggedUser.email);
   }
 
   useEffect(() => {
@@ -35,6 +35,7 @@ export default function User() {
       router.push('/404');
       return;
     }
+    setFavoriteList(loggedUserFavoriteObject.favoriteList);
     getMoviesByGenre(genre.id, 1).then((res) => {
       setFilmData((prev) => {
         return {

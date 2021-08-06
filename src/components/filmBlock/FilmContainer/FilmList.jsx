@@ -10,15 +10,15 @@ export default function FilmList({
   genre,
   handleFavoriteEvent,
 }) {
-  // let localFavoriteList = [];
-  // const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-  // if (process.browser) {
-  //   localFavoriteList = localStorage.getItem('favoriteList')
-  //     ? JSON.parse(localStorage.getItem('favoriteList')).find(
-  //         (favoriteObject) => favoriteObject.email === loggedUser.email
-  //       )
-  //     : [];
-  // }
+  let localFavoriteList = [];
+  const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+  if (process.browser) {
+    localFavoriteList = localStorage.getItem('favoriteList')
+      ? JSON.parse(localStorage.getItem('favoriteList')).find(
+          (favoriteObject) => favoriteObject.email === loggedUser.email
+        )
+      : [];
+  }
 
   return (
     <div className="my-5 w-4/5 md:w-3/4 mx-auto">
@@ -31,7 +31,7 @@ export default function FilmList({
         {filmList.map((film) => {
           return (
             <FilmBlock
-              onClick={(film) => handleFavoriteEvent(film)}
+              onClick={() => handleFavoriteEvent(film)}
               key={film.id}
               filmObject={film}
             />

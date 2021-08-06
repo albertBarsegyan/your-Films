@@ -1,18 +1,18 @@
-import LOGGED_USER_FAVORITE_OBJECT from '../constants/userFavoriteList';
 import LOGGED_USER from '../constants/userInfo';
 
 export const handleFavoriteButtonEvent = (filmObject, setStateHook) => {
   // browser render time
+  let loggedUserFavoriteObject;
   if (process.browser) {
+    loggedUserFavoriteObject = localStorage.getItem('favoriteList')
+      ? JSON.parse(localStorage.getItem('favoriteList')).find(
+          (favoriteObject) => favoriteObject.email === LOGGED_USER.email
+        )
+      : undefined;
     // if favoriteList exist in local storage
     if (localStorage.getItem('favoriteList')) {
       // if user has in local storage
-
-      if (
-        JSON.parse(localStorage.getItem('favoriteList')).find(
-          (favoriteObject) => favoriteObject.email === LOGGED_USER.email
-        )
-      ) {
+      if (loggedUserFavoriteObject) {
         // add to favoriteList
         const addLocalFavorites = JSON.parse(
           localStorage.getItem('favoriteList')
@@ -20,30 +20,32 @@ export const handleFavoriteButtonEvent = (filmObject, setStateHook) => {
           if (favoriteObject.email === LOGGED_USER.email) {
             let changedObject = { ...favoriteObject };
             changedObject.favoriteList.push(filmObject);
+            // add to state changed object
+            setStateHook(changedObject.favoriteList);
             return changedObject;
           }
           return favoriteObject;
         });
 
         // const addToLocalFavorites = LOGGED_USER_FAVORITE_OBJECT;
-
         const filterLocalFavorites = JSON.parse(
           localStorage.getItem('favoriteList')
         ).map((favoriteObject) => {
           if (favoriteObject.email === LOGGED_USER.email) {
             let changedObject = { ...favoriteObject };
-            changedObject.favoriteList = [
-              ...[changedObject.favoriteList],
-              filmObject,
-            ];
+            changedObject.favoriteList = changedObject.favoriteList.filter(
+              (favoriteObject) => favoriteObject.id !== filmObject.id
+            );
+            // add to state changed object
+            setStateHook(changedObject.favoriteList);
             return changedObject;
           }
           return favoriteObject;
         });
 
         if (
-          LOGGED_USER_FAVORITE_OBJECT &&
-          LOGGED_USER_FAVORITE_OBJECT.favoriteList.find(
+          loggedUserFavoriteObject &&
+          loggedUserFavoriteObject.favoriteList.find(
             (favoriteObject) => favoriteObject.id === filmObject.id
           )
         ) {
@@ -51,12 +53,12 @@ export const handleFavoriteButtonEvent = (filmObject, setStateHook) => {
             'favoriteList',
             JSON.stringify(filterLocalFavorites)
           );
-          setStateHook(filterLocalFavorites);
+
           return;
         }
 
         localStorage.setItem('favoriteList', JSON.stringify(addLocalFavorites));
-        setStateHook(addLocalFavorites);
+        return;
       }
       return;
     }
