@@ -10,17 +10,18 @@ export default function Favorites() {
   const [userFavoriteList, setUserFavoriteList] = useState([]);
   let loggedUser, loggedUserFavoriteObject;
   if (process.browser) {
-    loggedUser = {} || JSON.parse(localStorage.getItem('loggedUser'));
+    loggedUser =
+      localStorage.getItem('loggedUser') &&
+      JSON.parse(localStorage.getItem('loggedUser'));
     loggedUserFavoriteObject = JSON.parse(
       localStorage.getItem('favoriteList')
-    ).find((favoriteObject) => favoriteObject.email === loggedUser.email);
+    ).find((favoriteObject) => favoriteObject.email === loggedUser.email) ?? {
+      favoriteList: [],
+    };
   }
-
+  console.log(loggedUserFavoriteObject);
   useEffect(() => {
-    setUserFavoriteList(
-      isObjectEmpty(loggedUserFavoriteObject) &&
-        loggedUserFavoriteObject.favoriteList
-    );
+    setUserFavoriteList(loggedUserFavoriteObject.favoriteList);
     return () => {
       setUserFavoriteList([]);
     };

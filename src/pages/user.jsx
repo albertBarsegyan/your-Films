@@ -25,9 +25,11 @@ export default function User() {
   let loggedUser, loggedUserFavoriteObject;
   if (process.browser) {
     loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-    loggedUserFavoriteObject = JSON.parse(
-      localStorage.getItem('favoriteList')
-    ).find((favoriteObject) => favoriteObject.email === loggedUser.email);
+    loggedUserFavoriteObject =
+      localStorage.getItem('favoriteList') ?
+      JSON.parse(localStorage.getItem('favoriteList')).find(
+        (favoriteObject) => favoriteObject.email === loggedUser.email
+      ) : {favoriteList:[]};
   }
 
   useEffect(() => {

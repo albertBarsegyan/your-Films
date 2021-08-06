@@ -22,7 +22,7 @@ export const handleFavoriteButtonEvent = (filmObject, setStateHook) => {
             changedObject.favoriteList.push(filmObject);
             // add to state changed object
             setStateHook(changedObject.favoriteList);
-            return changedObject;
+            return changedObject;   
           }
           return favoriteObject;
         });

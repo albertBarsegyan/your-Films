@@ -11,8 +11,9 @@ export default function FilmList({
   handleFavoriteEvent,
 }) {
   let localFavoriteList = [];
-  const loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+  let loggedUser;
   if (process.browser) {
+    loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
     localFavoriteList = localStorage.getItem('favoriteList')
       ? JSON.parse(localStorage.getItem('favoriteList')).find(
           (favoriteObject) => favoriteObject.email === loggedUser.email
