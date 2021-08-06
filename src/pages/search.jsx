@@ -8,6 +8,7 @@ import Header from '../components/atoms/Header';
 import FilmList from '../components/filmBlock/FilmContainer/FilmList';
 import SearchContainer from '../components/search/SearchContainer';
 import MenuBlock from '../components/userMenu/MenuBlock';
+import { handleFavoriteButtonEvent } from '../handlers/handleFavoriteButtonEvent';
 import isObjectEmpty from '../helpers/isObjectEmpty';
 import {
   getMoviesByGenre,
@@ -23,7 +24,7 @@ export default function User() {
   });
   const [searchInput, setSearchInput] = useState('');
   const genre = { id: 18, name: 'Search Film' };
-
+  const [favoriteList, setFavoriteList] = useState([]);
   let loggedUser;
   if (process.browser) {
     loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
@@ -101,6 +102,9 @@ export default function User() {
       <div className="flex flex-col md:flex-row">
         {filmData.filmList.length > 0 ? (
           <FilmList
+            handleFavoriteEvent={(filmObject) =>
+              handleFavoriteButtonEvent(filmObject, setFavoriteList)
+            }
             genre={genre && genre.name}
             filmList={filmData.filmList}
             onClick={incrementPage}

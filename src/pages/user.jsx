@@ -11,7 +11,7 @@ import SearchContainer from '../components/search/SearchContainer';
 import MenuBlock from '../components/userMenu/MenuBlock';
 import { handleFavoriteButtonEvent } from '../handlers/handleFavoriteButtonEvent';
 import isObjectEmpty from '../helpers/isObjectEmpty';
-import { getMoviesByGenre, getSearchedFilms } from '../services/genreService';
+import { getMoviesByGenre } from '../services/genreService';
 
 export default function User() {
   const router = useRouter();
@@ -25,11 +25,11 @@ export default function User() {
   let loggedUser, loggedUserFavoriteObject;
   if (process.browser) {
     loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-    loggedUserFavoriteObject =
-      localStorage.getItem('favoriteList') ?
-      JSON.parse(localStorage.getItem('favoriteList')).find(
-        (favoriteObject) => favoriteObject.email === loggedUser.email
-      ) : {favoriteList:[]};
+    loggedUserFavoriteObject = localStorage.getItem('favoriteList')
+      ? JSON.parse(localStorage.getItem('favoriteList')).find(
+          (favoriteObject) => favoriteObject.email === loggedUser.email
+        )
+      : { favoriteList: [] };
   }
 
   useEffect(() => {
@@ -71,6 +71,7 @@ export default function User() {
         });
       });
   };
+  // console.log(showFavoritesInsideFilmList(filmData.filmList, favoriteList));
   const showMoviesByGenre = (genreObject) => {
     getMoviesByGenre(genreObject.id, 1).then((response) => {
       setFilmData({

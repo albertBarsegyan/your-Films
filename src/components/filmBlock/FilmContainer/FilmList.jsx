@@ -10,7 +10,7 @@ export default function FilmList({
   genre,
   handleFavoriteEvent,
 }) {
-  let localFavoriteList = [];
+  let localFavoriteList;
   let loggedUser;
   if (process.browser) {
     loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
