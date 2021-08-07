@@ -25,9 +25,14 @@ export default function User() {
   const [searchInput, setSearchInput] = useState('');
   const genre = { id: 18, name: 'Search Film' };
   const [favoriteList, setFavoriteList] = useState([]);
-  let loggedUser;
+  let loggedUser, loggedUserFavoriteObject;
   if (process.browser) {
     loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
+    loggedUserFavoriteObject = localStorage.getItem('favoriteList')
+      ? JSON.parse(localStorage.getItem('favoriteList')).find(
+          (favoriteObject) => favoriteObject.email === loggedUser.email
+        )
+      : { favoriteList: [] };
   }
 
   useEffect(() => {
@@ -35,6 +40,7 @@ export default function User() {
       router.push('/404');
       return;
     }
+    setFavoriteList(loggedUserFavoriteObject.favoriteList);
     getPopularList(1).then((data) => {
       setFilmData({ filmList: data, page: 1 });
     });
@@ -108,6 +114,7 @@ export default function User() {
             genre={genre && genre.name}
             filmList={filmData.filmList}
             onClick={incrementPage}
+            favList={favoriteList}
           />
         ) : (
           <div className="flex w-full text-center justify-center items-center">

@@ -4,23 +4,14 @@ import FilmBlock from './FilmBlock';
 import { array } from 'prop-types';
 import PrimaryButton from '../../buttons/PrimaryButton';
 
+
 export default function FilmList({
   filmList,
+  favList,
   onClick,
   genre,
   handleFavoriteEvent,
 }) {
-  let localFavoriteList;
-  let loggedUser;
-  if (process.browser) {
-    loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-    localFavoriteList = localStorage.getItem('favoriteList')
-      ? JSON.parse(localStorage.getItem('favoriteList')).find(
-          (favoriteObject) => favoriteObject.email === loggedUser.email
-        )
-      : [];
-  }
-
   return (
     <div className="my-5 w-4/5 md:w-3/4 mx-auto">
       <div className="flex items-center justify-center mb-4">
@@ -30,6 +21,16 @@ export default function FilmList({
       </div>
       <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         {filmList.map((film) => {
+          if (favList.some((favorite) => favorite.id === film.id)) {
+            return (
+              <FilmBlock
+                makeFavorite
+                onClick={() => handleFavoriteEvent(film)}
+                key={film.id}
+                filmObject={film}
+              />
+            );
+          }
           return (
             <FilmBlock
               onClick={() => handleFavoriteEvent(film)}
@@ -38,6 +39,25 @@ export default function FilmList({
             />
           );
         })}
+        {/* {showFavoritesInsideFilmList(filmList, favList).map((filmObject) => {
+          if (filmObject.isFavorite) {
+            return (
+              <FilmBlock
+                makeFavorite
+                onClick={() => handleFavoriteEvent(filmObject.film)}
+                key={filmObject.film.id}
+                filmObject={filmObject.film}
+              />
+            );
+          }
+          return (
+            <FilmBlock
+              onClick={() => handleFavoriteEvent(filmObject.film)}
+              key={filmObject.film.id}
+              filmObject={filmObject.film}
+            />
+          );
+        })} */}
       </div>
       <div className="flex items-center justify-center">
         <PrimaryButton primary onClick={onClick}>
@@ -49,7 +69,9 @@ export default function FilmList({
 }
 FilmList.propTypes = {
   filmList: array,
+  favList: array,
 };
 FilmList.defaultProps = {
   filmList: [],
+  favList: [],
 };

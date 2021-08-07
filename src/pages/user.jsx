@@ -2,19 +2,21 @@ import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useEffect, useReducer } from 'react';
+import { useEffect } from 'react';
 import Footer from '../components/atoms/Footer';
 import Header from '../components/atoms/Header';
 import FilmList from '../components/filmBlock/FilmContainer/FilmList';
 import GenreContainer from '../components/filmBlock/genres/GenreContainer';
-import SearchContainer from '../components/search/SearchContainer';
 import MenuBlock from '../components/userMenu/MenuBlock';
+import getLoggedUserData from '../constants/userInfo';
 import { handleFavoriteButtonEvent } from '../handlers/handleFavoriteButtonEvent';
+import getCurrentUserFavoriteList from '../helpers/getCurrentUserFavoriteList';
 import isObjectEmpty from '../helpers/isObjectEmpty';
 import { getMoviesByGenre } from '../services/genreService';
 
 export default function User() {
   const router = useRouter();
+  let userInfo;
   const [filmData, setFilmData] = useState({
     filmList: [],
     page: 1,
@@ -22,18 +24,13 @@ export default function User() {
   const [favoriteList, setFavoriteList] = useState([]);
   const [genre, setGenre] = useState({ id: 16, name: 'Animation' });
 
-  let loggedUser, loggedUserFavoriteObject;
+  let loggedUserFavoriteObject = getCurrentUserFavoriteList('favoriteList');
   if (process.browser) {
-    loggedUser = JSON.parse(localStorage.getItem('loggedUser'));
-    loggedUserFavoriteObject = localStorage.getItem('favoriteList')
-      ? JSON.parse(localStorage.getItem('favoriteList')).find(
-          (favoriteObject) => favoriteObject.email === loggedUser.email
-        )
-      : { favoriteList: [] };
+    userInfo = JSON.parse(localStorage.getItem('loggedUser'));
   }
 
   useEffect(() => {
-    if (isObjectEmpty(loggedUser)) {
+    if (isObjectEmpty(userInfo)) {
       router.push('/404');
       return;
     }
@@ -71,7 +68,7 @@ export default function User() {
         });
       });
   };
-  // console.log(showFavoritesInsideFilmList(filmData.filmList, favoriteList));
+
   const showMoviesByGenre = (genreObject) => {
     getMoviesByGenre(genreObject.id, 1).then((response) => {
       setFilmData({
@@ -81,7 +78,7 @@ export default function User() {
     });
     setGenre(genreObject);
   };
-
+  console.log();
   return (
     <div className="relative">
       <Head>
@@ -99,6 +96,7 @@ export default function User() {
             handleFavoriteButtonEvent(filmObject, setFavoriteList)
           }
           genre={genre && genre.name}
+          favList={favoriteList}
           filmList={filmData.filmList}
           onClick={() => incrementPage()}
         />
