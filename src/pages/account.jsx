@@ -17,7 +17,7 @@ export default function Account() {
       <Header>
         <MenuBlock />
       </Header>
-      <div></div>
+
       <Footer />
     </div>
   );
