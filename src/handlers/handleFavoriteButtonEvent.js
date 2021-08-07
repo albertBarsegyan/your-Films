@@ -1,4 +1,3 @@
-import userInfo from '../constants/userInfo';
 import getCurrentUserFavoriteList from '../helpers/getCurrentUserFavoriteList';
 
 export const handleFavoriteButtonEvent = (filmObject, setStateHook) => {
@@ -47,7 +46,7 @@ export const handleFavoriteButtonEvent = (filmObject, setStateHook) => {
           }
           return favoriteObject;
         });
-
+        // if film exist in favoriteList , filters
         if (
           loggedUserFavoriteObject &&
           loggedUserFavoriteObject.favoriteList.find(
@@ -58,13 +57,13 @@ export const handleFavoriteButtonEvent = (filmObject, setStateHook) => {
             'favoriteList',
             JSON.stringify(filterLocalFavorites)
           );
-
           return;
         }
-
+        // if film doesn't exist in favoriteList, adding
         localStorage.setItem('favoriteList', JSON.stringify(addLocalFavorites));
         return;
       }
+      // if  there isn't user with this email add object to favoriteList
       addNewFavoriteObject = JSON.parse(localStorage.getItem('favoriteList'));
       addNewFavoriteObject.push({
         email: userInfo.email,
