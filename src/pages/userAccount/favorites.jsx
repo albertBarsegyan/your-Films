@@ -13,11 +13,13 @@ export default function Favorites() {
     loggedUser =
       localStorage.getItem('loggedUser') &&
       JSON.parse(localStorage.getItem('loggedUser'));
-    loggedUserFavoriteObject = JSON.parse(
-      localStorage.getItem('favoriteList')
-    ).find((favoriteObject) => favoriteObject.email === loggedUser.email) ?? {
-      favoriteList: [],
-    };
+    loggedUserFavoriteObject = localStorage.getItem('favoriteList')
+      ? JSON.parse(localStorage.getItem('favoriteList')).find(
+          (favoriteObject) => favoriteObject.email === loggedUser.email
+        ) ?? {
+          favoriteList: [],
+        }
+      : [];
   }
   console.log(loggedUserFavoriteObject);
   useEffect(() => {
@@ -36,7 +38,7 @@ export default function Favorites() {
         <MenuBlock />
       </Header>
       <div className="flex items-center justify-center mb-4">
-        <h3 className="text-center text-3xl text-primary border-b border-primary w-1/6 py-2">
+        <h3 className="text-center text-3xl text-primary border-b border-primary w-1/2 md:w-1/6 py-2">
           Favorites
         </h3>
       </div>
