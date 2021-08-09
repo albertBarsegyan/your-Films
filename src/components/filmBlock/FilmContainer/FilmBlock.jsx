@@ -7,13 +7,23 @@ import getGenreNameById from '../../../helpers/filmAPI/getGenreNameById';
 import classNames from 'classnames';
 import { bool } from 'prop-types';
 
-export default function FilmBlock({ filmObject, makeFavorite, onClick }) {
+export default function FilmBlock({
+  filmObject,
+  makeFavorite,
+  onClick,
+  isGridBlock,
+}) {
   const [genres, setGenres] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
   const blockStyle = classNames({
     'max-w-md w-full shadow-lg rounded-xl p-6 duration-300': true,
     'bg-primary ': !isFavorite,
     'bg-green-500': isFavorite,
+  });
+  const isGridItem = classNames({
+    'flex items-center justify-center m-1': true,
+    'md:w-full': !isGridBlock,
+    'w-3/4 md:w-1/3 ': isGridBlock,
   });
 
   useEffect(() => {
@@ -26,7 +36,7 @@ export default function FilmBlock({ filmObject, makeFavorite, onClick }) {
   }, []);
 
   return (
-    <div className="flex items-center justify-center m-1 md:w-full">
+    <div className={isGridItem}>
       {/* <div className="container"> */}
       <div className={blockStyle}>
         <div className="w-auto flex flex-col">
@@ -121,9 +131,11 @@ export default function FilmBlock({ filmObject, makeFavorite, onClick }) {
 }
 FilmBlock.propTypes = {
   makeFavorite: bool,
+  isGridItem: bool,
 };
 
 FilmBlock.defaultProps = {
   makeFavorite: false,
+  isGridItem: true,
 };
 

@@ -5,7 +5,7 @@ import Header from '../../components/atoms/Header';
 import FilmBlock from '../../components/filmBlock/FilmContainer/FilmBlock';
 import MenuBlock from '../../components/userMenu/MenuBlock';
 import { handleFavoriteButtonEvent } from '../../handlers/handleFavoriteButtonEvent';
-import isObjectEmpty from '../../helpers/isObjectEmpty';
+
 export default function Favorites() {
   const [userFavoriteList, setUserFavoriteList] = useState([]);
   let loggedUser, loggedUserFavoriteObject;
@@ -42,29 +42,31 @@ export default function Favorites() {
           Favorites
         </h3>
       </div>
-      <div className="flex flex-col md:flex-row flex-wrap gap-5 mx-5 justify-center my-5">
-        {userFavoriteList && userFavoriteList.length > 0 ? (
-          userFavoriteList.map((favorite) => {
-            return (
-              <FilmBlock
-                onClick={() =>
-                  handleFavoriteButtonEvent(favorite, setUserFavoriteList)
-                }
-                makeFavorite
-                key={favorite.id}
-                filmObject={favorite}
-              />
-            );
-          })
-        ) : (
-          <div className="w-full">
-            <p className="text-primary text-center text-4xl">
-              There isn&rsquo;t any favorite Movie
-            </p>
-          </div>
-        )}
+      <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center flex-wrap gap-0 md:gap-5">
+          {userFavoriteList && userFavoriteList.length > 0 ? (
+            userFavoriteList.map((favorite) => {
+              return (
+                <FilmBlock
+                  isGridBlock={true}
+                  onClick={() =>
+                    handleFavoriteButtonEvent(favorite, setUserFavoriteList)
+                  }
+                  makeFavorite
+                  key={favorite.id}
+                  filmObject={favorite}
+                />
+              );
+            })
+          ) : (
+            <div className="w-full flex items-center justify-center\\">
+              <p className="text-primary text-center text-4xl">
+                There isn&rsquo;t any favorite Movie
+              </p>
+            </div>
+          )}
+        </div>
       </div>
-
       <Footer />
     </div>
   );

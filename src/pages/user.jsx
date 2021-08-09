@@ -8,7 +8,6 @@ import Header from '../components/atoms/Header';
 import FilmList from '../components/filmBlock/FilmContainer/FilmList';
 import GenreContainer from '../components/filmBlock/genres/GenreContainer';
 import MenuBlock from '../components/userMenu/MenuBlock';
-import getLoggedUserData from '../constants/userInfo';
 import { handleFavoriteButtonEvent } from '../handlers/handleFavoriteButtonEvent';
 import getCurrentUserFavoriteList from '../helpers/getCurrentUserFavoriteList';
 import isObjectEmpty from '../helpers/isObjectEmpty';

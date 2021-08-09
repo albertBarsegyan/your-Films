@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import PrimaryButton from '../buttons/PrimaryButton';
 import MenuToggle from './MenuToggle';
 
 export default function MenuBlock() {

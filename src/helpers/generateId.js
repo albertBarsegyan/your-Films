@@ -1,3 +1,4 @@
 export default function generateId() {
-  return new Date().valueOf();
+  let random = Math.floor(Math.random() * 10);
+  return new Date().valueOf() * random;
 }

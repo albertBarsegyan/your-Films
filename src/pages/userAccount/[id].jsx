@@ -11,7 +11,7 @@ export default function UserPage() {
   return (
     <div className="relative">
       <Head>
-        <title>Personal Blog </title>
+        <title>Account info </title>
       </Head>
       <Header>
         <MenuBlock />

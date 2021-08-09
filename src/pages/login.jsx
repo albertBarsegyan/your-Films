@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import Link from 'next/link';
 import CommonLogin from '../components/loginBlock/CommonLogin';
 import Footer from '../components/atoms/Footer';
 import Header from '../components/atoms/Header';

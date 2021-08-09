@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import RegisterComponent from '../components/registrationBlock/RegisterComponent';
 import Header from '../components/atoms/Header';

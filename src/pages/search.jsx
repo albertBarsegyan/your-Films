@@ -1,8 +1,6 @@
-import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useState } from 'react';
 import Footer from '../components/atoms/Footer';
 import Header from '../components/atoms/Header';
 import FilmList from '../components/filmBlock/FilmContainer/FilmList';
@@ -10,11 +8,7 @@ import SearchContainer from '../components/search/SearchContainer';
 import MenuBlock from '../components/userMenu/MenuBlock';
 import { handleFavoriteButtonEvent } from '../handlers/handleFavoriteButtonEvent';
 import isObjectEmpty from '../helpers/isObjectEmpty';
-import {
-  getMoviesByGenre,
-  getSearchedFilms,
-  getPopularList,
-} from '../services/genreService';
+import { getSearchedFilms, getPopularList } from '../services/genreService';
 
 export default function User() {
   const router = useRouter();

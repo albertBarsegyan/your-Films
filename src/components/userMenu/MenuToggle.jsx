@@ -40,11 +40,7 @@ export default function MenuToggle() {
           </div>
         </li>
 
-        <li>
-          <div>
-            <MenuButton onClick={handleLogOut}>Log out</MenuButton>
-          </div>
-        </li>
+        <MenuButton onClick={handleLogOut}>Log out</MenuButton>
       </ul>
     </div>
   );

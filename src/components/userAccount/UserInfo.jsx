@@ -9,7 +9,7 @@ export default function UserInfo() {
   return (
     <div className="container">
       <div className="mt-5">
-        <div className="w-1/2 mx-auto bg-white rounded-md">
+        <div className="w-3/4 mx-auto bg-white rounded-md">
           <div className="flex flex-col justify-center items-center">
             <h6 className="text-primary text-4xl font-medium my-4">
               User Information
@@ -54,9 +54,7 @@ export default function UserInfo() {
                 border-b-2 border-gray-200
               "
             >
-              <p className="text-primary ml-4">
-                {localUser && localUser.email}
-              </p>
+              <p className="text-primary ml-4">Email</p>
               <p className="text-primary mr-4">
                 {localUser && localUser.email}
               </p>
