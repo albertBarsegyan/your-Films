@@ -26,7 +26,7 @@ export default function FilmBlock({ filmObject, makeFavorite, onClick }) {
   }, []);
 
   return (
-    <div className="flex items-center justify-center m-1">
+    <div className="flex items-center justify-center m-1 md:w-full">
       {/* <div className="container"> */}
       <div className={blockStyle}>
         <div className="w-auto flex flex-col">

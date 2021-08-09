@@ -19,7 +19,8 @@ export default function FilmList({
           {genre}
         </h3>
       </div>
-      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+
+      <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
         {filmList.map((film) => {
           if (favList.some((favorite) => favorite.id === film.id)) {
             return (
@@ -39,25 +40,6 @@ export default function FilmList({
             />
           );
         })}
-        {/* {showFavoritesInsideFilmList(filmList, favList).map((filmObject) => {
-          if (filmObject.isFavorite) {
-            return (
-              <FilmBlock
-                makeFavorite
-                onClick={() => handleFavoriteEvent(filmObject.film)}
-                key={filmObject.film.id}
-                filmObject={filmObject.film}
-              />
-            );
-          }
-          return (
-            <FilmBlock
-              onClick={() => handleFavoriteEvent(filmObject.film)}
-              key={filmObject.film.id}
-              filmObject={filmObject.film}
-            />
-          );
-        })} */}
       </div>
       <div className="flex items-center justify-center">
         <PrimaryButton primary onClick={onClick}>
